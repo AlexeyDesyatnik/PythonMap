@@ -1,0 +1,14 @@
+id: files
+title: Файлы
+nodes:
+  - id: file-read
+    kind: topic
+    title: Чтение текстового файла
+    description: open и with открывают файл, read и цикл по строкам читают его содержимое. Нужно, когда данных слишком много, чтобы вводить их вручную.
+    prerequisites: [string-methods, for-range]
+
+  - id: file-numbers
+    kind: topic
+    title: Чтение чисел из файла
+    description: Чтение чисел из файла — по одному в строке или по нескольку через пробел. Так начинается решение задач с большими файлами данных.
+    prerequisites: [file-read, split-input]

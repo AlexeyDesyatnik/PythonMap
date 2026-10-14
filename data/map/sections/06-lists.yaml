@@ -1,0 +1,50 @@
+id: lists
+title: Списки
+nodes:
+  - id: list-basics
+    kind: topic
+    title: Списки
+    description: Список хранит много значений под одним именем. Элементы добавляют через append, читают и меняют по индексу, перебирают в цикле.
+    prerequisites: [for-range]
+
+  - id: split-input
+    kind: topic
+    title: Ввод чисел одной строкой
+    description: split разбивает строку на части, map с int превращает их в числа, join собирает список обратно в строку. Так читают и выводят данные, записанные в одну строку.
+    prerequisites: [list-basics, string-basics]
+
+  - id: list-functions
+    kind: topic
+    title: Функции и методы списков
+    description: len, sum, min, max, проверка in, а также методы insert, pop, remove, index и count. Заменяют многие циклы одной строкой.
+    prerequisites: [list-basics]
+
+  - id: list-slices
+    kind: topic
+    title: Срезы списков
+    description: Срезы списков работают так же, как срезы строк, — для копирования, переворота и выбора части элементов.
+    prerequisites: [list-basics]
+
+  - id: sorting-builtin
+    kind: topic
+    title: Сортировка встроенными средствами
+    description: Метод sort и функция sorted упорядочивают список по возрастанию или убыванию. После сортировки многие задачи решаются гораздо проще.
+    prerequisites: [list-basics]
+
+  - id: list-comprehension
+    kind: topic
+    title: Генераторы списков
+    description: Запись в квадратных скобках строит новый список из старого, преобразуя и отбирая элементы. Короче и понятнее цикла с append.
+    prerequisites: [list-basics]
+
+  - id: tuples
+    kind: topic
+    title: Кортежи и распаковка
+    description: Кортеж — неизменяемый список. Распаковка присваивает несколько переменных сразу и меняет значения местами без третьей переменной.
+    prerequisites: [list-basics]
+
+  - id: matrix
+    kind: topic
+    title: Двумерные списки
+    description: Список списков хранит таблицу — например, матрицу или игровое поле. Обходится вложенными циклами по строкам и столбцам.
+    prerequisites: [list-basics, nested-loops]

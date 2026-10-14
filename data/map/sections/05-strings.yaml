@@ -1,0 +1,44 @@
+id: strings
+title: Строки
+nodes:
+  - id: string-basics
+    kind: topic
+    title: Строки и операции над ними
+    description: Длина строки, сложение и повторение строк, проверка вхождения через in. С этого начинается обработка текста.
+    prerequisites: [input-string]
+
+  - id: string-indexing
+    kind: topic
+    title: Индексы символов
+    description: Обращение к символу строки по номеру, в том числе с конца через отрицательные индексы. Нужно, чтобы работать с отдельными символами.
+    prerequisites: [string-basics]
+
+  - id: string-slices
+    kind: topic
+    title: Срезы строк
+    description: Срез вырезает из строки часть с заданными началом, концом и шагом. Так получают подстроки и переворачивают строку.
+    prerequisites: [string-indexing]
+
+  - id: string-loop
+    kind: topic
+    title: Перебор символов строки
+    description: Цикл for проходит по строке символ за символом. Нужен, чтобы считать, проверять и преобразовывать символы.
+    prerequisites: [string-basics, for-range]
+
+  - id: string-methods
+    kind: topic
+    title: Методы строк
+    description: Готовые методы строк — замена, подсчёт и поиск подстроки, смена регистра, удаление пробелов по краям. Решают типовые задачи с текстом в одну строку кода.
+    prerequisites: [string-basics]
+
+  - id: ord-chr
+    kind: topic
+    title: Коды символов
+    description: ord даёт код символа, chr — символ по коду. Нужны для шифров и для сравнения букв по алфавиту.
+    prerequisites: [string-basics]
+
+  - id: number-systems
+    kind: topic
+    title: Системы счисления в Python
+    description: bin, oct и hex записывают число в другой системе счисления, int с основанием переводит обратно. Позволяют переводить числа без ручных вычислений.
+    prerequisites: [string-basics, int-input]

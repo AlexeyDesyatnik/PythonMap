@@ -1,10 +1,40 @@
+# «Основы Python» — первая ступень обеих целей (согласовано с автором).
+# Следующие ступени добавляются в задачах №5 (олимпиады) и №6 (ЕГЭ).
 goals:
   - id: ege
     title: ЕГЭ
     stages:
-      - id: ege-basics
-        title: Основы
-        targets: [while-loop]
-      - id: ege-first-tasks
-        title: Первые задания
-        targets: [ege-number-algorithm]
+      - id: ege-python-basics
+        title: Основы Python
+        targets: &python-basics
+          - print-args
+          - f-strings
+          - math-module
+          - elif
+          - logical-ops
+          - loop-accumulate
+          - loop-min-max
+          - break-continue
+          - digits-of-number
+          - string-slices
+          - string-loop
+          - ord-chr
+          - number-systems
+          - list-functions
+          - list-slices
+          - list-comprehension
+          - tuples
+          - matrix
+          - sets
+          - dict-counting
+          - scope
+          - lambda-key
+          - recursion
+          - file-numbers
+
+  - id: olympiad
+    title: Олимпиады
+    stages:
+      - id: olympiad-python-basics
+        title: Основы Python
+        targets: *python-basics

@@ -1,9 +1,0 @@
-id: ege
-title: Задания ЕГЭ
-nodes:
-  - id: ege-number-algorithm
-    kind: ege-task
-    egeNumber: 5
-    title: Анализ алгоритма над числом
-    description: Алгоритм строит новое число из записи данного; нужно найти число с заданным результатом. Решается перебором.
-    prerequisites: [digits-of-number]

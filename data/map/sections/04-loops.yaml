@@ -1,0 +1,44 @@
+id: loops
+title: Циклы
+nodes:
+  - id: for-range
+    kind: topic
+    title: Цикл for и range
+    description: for повторяет действия для каждого числа из range — с заданными началом, концом и шагом. Нужен, когда заранее известно, сколько раз повторять.
+    prerequisites: [int-input]
+
+  - id: loop-accumulate
+    kind: topic
+    title: Сумма и количество в цикле
+    description: Переменная-накопитель собирает в цикле сумму, произведение или количество. Основа почти всех задач на обработку последовательности чисел.
+    prerequisites: [for-range]
+
+  - id: loop-min-max
+    kind: topic
+    title: Максимум и минимум в цикле
+    description: Поиск наибольшего и наименьшего значения в последовательности, которая вводится по одному числу. Классический приём, на котором строятся более сложные задачи.
+    prerequisites: [for-range, if-else]
+
+  - id: while-loop
+    kind: topic
+    title: Цикл while
+    description: while повторяет действия, пока условие истинно. Нужен, когда число повторений заранее неизвестно — например, ввод до нуля.
+    prerequisites: [if-else]
+
+  - id: break-continue
+    kind: topic
+    title: break и continue
+    description: break досрочно завершает цикл, continue переходит к следующему повторению. Упрощают циклы поиска и пропуск ненужных значений.
+    prerequisites: [for-range, if-else]
+
+  - id: nested-loops
+    kind: topic
+    title: Вложенные циклы
+    description: Цикл внутри цикла перебирает все пары, тройки и таблицы значений. На вложенных циклах держится решение задач перебором.
+    prerequisites: [for-range]
+
+  - id: digits-of-number
+    kind: topic
+    title: Цифры числа
+    description: Разбор числа на цифры делением и остатком в цикле while. Встречается и в олимпиадных задачах, и в заданиях ЕГЭ.
+    prerequisites: [while-loop, div-mod]

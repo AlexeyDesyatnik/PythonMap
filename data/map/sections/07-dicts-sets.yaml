@@ -1,0 +1,20 @@
+id: dicts-sets
+title: Словари и множества
+nodes:
+  - id: sets
+    kind: topic
+    title: Множества
+    description: Множество хранит значения без повторов и быстро проверяет, есть ли в нём элемент. Умеет объединение, пересечение и разность.
+    prerequisites: [list-basics]
+
+  - id: dict-basics
+    kind: topic
+    title: Словари
+    description: Словарь хранит пары ключ — значение и находит значение по ключу. Перебирается по ключам, значениям или парам.
+    prerequisites: [for-range]
+
+  - id: dict-counting
+    kind: topic
+    title: Подсчёт словарём
+    description: Словарь, в котором для каждого значения хранится, сколько раз оно встретилось. Типовой способ посчитать частоты букв, слов или чисел.
+    prerequisites: [dict-basics]

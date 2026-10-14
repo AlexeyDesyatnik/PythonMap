@@ -1,0 +1,56 @@
+id: sorting-search
+title: Сортировка и поиск
+nodes:
+  - id: simple-sorts
+    kind: topic
+    title: Простые сортировки
+    description: Сортировки пузырьком, выбором и вставками. Показывают, как устроена сортировка, и работают за квадратичное время.
+    prerequisites: [list-basics, nested-loops]
+
+  - id: greedy
+    kind: topic
+    title: Жадные алгоритмы
+    description: На каждом шаге берётся лучший сейчас вариант — часто после сортировки. Важно уметь объяснить, почему такой выбор не испортит ответ.
+    prerequisites: [sorting-builtin]
+
+  - id: prefix-sums
+    kind: topic
+    title: Префиксные суммы
+    description: Массив сумм от начала до каждой позиции позволяет мгновенно находить сумму любого отрезка. Превращает много медленных подсчётов в быстрые.
+    prerequisites: [list-basics, loop-accumulate]
+
+  - id: two-pointers
+    kind: topic
+    title: Два указателя
+    description: Два индекса движутся по массиву в одну сторону или навстречу друг другу. Решает за линейное время задачи на пары и отрезки.
+    prerequisites: [list-basics, while-loop]
+
+  - id: binary-search
+    kind: topic
+    title: Бинарный поиск
+    description: Поиск в упорядоченном массиве делением отрезка пополам, в том числе модулем bisect. Находит элемент за логарифмическое время.
+    prerequisites: [list-basics, while-loop]
+
+  - id: counting-sort
+    kind: topic
+    title: Сортировка подсчётом
+    description: Подсчитывает, сколько раз встречается каждое значение, и выписывает их по порядку. Быстрее любой другой сортировки, когда значения небольшие.
+    prerequisites: [list-basics]
+
+  - id: merge-sort
+    kind: topic
+    title: Сортировка слиянием
+    description: Рекурсивно сортирует половины массива и сливает их. Работает за n log n; на её идее держатся многие задачи.
+    prerequisites: [recursion, list-basics]
+
+  - id: binary-search-answer
+    kind: topic
+    title: Бинарный поиск по ответу
+    description: Если по ответу можно быстро проверить, подходит ли он, ответ ищется бинарным поиском. Частый приём задач на оптимизацию.
+    prerequisites: [binary-search]
+
+  - id: prefix-sums-2d
+    kind: topic
+    title: Двумерные префиксные суммы
+    description: Префиксные суммы для таблицы — сумма любого прямоугольника за одно действие.
+    prerequisites: [prefix-sums, matrix]

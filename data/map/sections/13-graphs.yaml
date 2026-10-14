@@ -1,0 +1,50 @@
+id: graphs
+title: Графы
+nodes:
+  - id: graph-representation
+    kind: topic
+    title: Хранение графа
+    description: Граф хранят списками смежности или матрицей смежности, читая рёбра из входных данных. С этого начинается любая задача на графы.
+    prerequisites: [split-input]
+
+  - id: dfs
+    kind: topic
+    title: Обход в глубину
+    description: Рекурсивный обход, который идёт по графу как можно дальше и возвращается назад. Находит достижимые вершины и циклы.
+    prerequisites: [graph-representation, recursion]
+
+  - id: connected-components
+    kind: topic
+    title: Компоненты связности
+    description: Разбиение графа на части, внутри которых все вершины связаны. Находятся обходом из каждой ещё не посещённой вершины.
+    prerequisites: [dfs]
+
+  - id: bfs
+    kind: topic
+    title: Обход в ширину
+    description: Обход по слоям с помощью очереди. Находит кратчайший путь по числу рёбер.
+    prerequisites: [graph-representation, queue]
+
+  - id: grid-bfs
+    kind: topic
+    title: Обход клетчатого поля
+    description: Обход в ширину по клеткам таблицы, где соседи — соседние клетки. Типовые задачи — лабиринты и заливка областей.
+    prerequisites: [bfs, matrix]
+
+  - id: dijkstra
+    kind: topic
+    title: Алгоритм Дейкстры
+    description: Кратчайшие пути во взвешенном графе с неотрицательными весами. Быстрый вариант использует кучу.
+    prerequisites: [graph-representation, heap]
+
+  - id: topological-sort
+    kind: topic
+    title: Топологическая сортировка
+    description: Упорядочивает вершины так, что все рёбра идут вперёд. Нужна для задач с зависимостями и порядком действий.
+    prerequisites: [dfs]
+
+  - id: mst
+    kind: topic
+    title: Минимальное остовное дерево
+    description: Набор рёбер наименьшего суммарного веса, который связывает все вершины. Строится алгоритмом Краскала — рёбра по возрастанию веса и система непересекающихся множеств.
+    prerequisites: [graph-representation, dsu, sorting-builtin]

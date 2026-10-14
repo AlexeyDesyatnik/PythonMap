@@ -1,0 +1,20 @@
+id: control-flow
+title: Условия и циклы
+nodes:
+  - id: if-else
+    kind: topic
+    title: Условный оператор
+    description: if и else выбирают, какую часть программы выполнить, в зависимости от условия.
+    prerequisites: [variables]
+
+  - id: while-loop
+    kind: topic
+    title: Цикл while
+    description: Повторяет действия, пока условие истинно. Нужен, когда число повторений заранее неизвестно.
+    prerequisites: [if-else]
+
+  - id: digits-of-number
+    kind: topic
+    title: Цифры числа
+    description: Разбор числа на цифры с помощью деления и остатка в цикле.
+    prerequisites: [while-loop, input-numbers]

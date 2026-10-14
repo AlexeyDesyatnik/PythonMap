@@ -1,0 +1,13 @@
+# Учебная карта для тестов сайта. Не связана с настоящими данными.
+id: alpha
+title: Раздел Альфа
+nodes:
+  - id: a1
+    kind: topic
+    title: Тема А1
+    description: Первая тема.
+  - id: a2
+    kind: topic
+    title: Тема А2
+    description: Вторая тема.
+    prerequisites: [a1]

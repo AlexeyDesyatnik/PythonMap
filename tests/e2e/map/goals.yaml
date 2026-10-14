@@ -1,0 +1,10 @@
+goals:
+  - id: exam
+    title: Экзамен
+    stages:
+      - id: exam-1
+        title: Ступень 1
+        targets: [a2]
+      - id: exam-2
+        title: Ступень 2
+        targets: [exam-1]

@@ -1,0 +1,10 @@
+goals:
+  - id: ege
+    title: ЕГЭ
+    stages:
+      - id: ege-basics
+        title: Основы
+        targets: [while-loop]
+      - id: ege-first-tasks
+        title: Первые задания
+        targets: [ege-number-algorithm]

@@ -1,0 +1,131 @@
+# Задания ЕГЭ по проекту спецификации и демоверсии ФИПИ на 2027 год
+# (опубликованы 22.09.2026). Номер задания — только подпись: при смене
+# нумерации меняется egeNumber, идентификатор остаётся.
+id: ege
+title: Задания ЕГЭ
+nodes:
+  - id: ege-truth-table
+    kind: ege-task
+    egeNumber: 2
+    title: Таблица истинности
+    description: По фрагменту таблицы истинности нужно определить, какой переменной соответствует каждый столбец. Кодом перебирают все наборы значений и все порядки переменных через itertools.
+    prerequisites: [bool-expressions, itertools-enumeration]
+
+  - id: ege-number-algorithm
+    kind: ege-task
+    egeNumber: 5
+    title: Алгоритм над записью числа
+    description: Алгоритм строит новое число из двоичной или другой записи исходного; нужно найти число с заданным свойством. Решается перебором исходных чисел с bin и срезами строк.
+    prerequisites: [number-systems, string-slices, loop-min-max]
+
+  - id: ege-turtle
+    kind: ege-task
+    egeNumber: 6
+    title: Исполнитель Черепаха
+    description: Нужно посчитать точки с целыми координатами внутри фигуры, которую рисует Черепаха. Алгоритм повторяют модулем turtle и считают точки на рисунке.
+    prerequisites: [turtle-graphics]
+
+  - id: ege-words
+    kind: ege-task
+    egeNumber: 8
+    title: Перебор слов
+    description: Слова из заданных букв выписаны по алфавиту; нужно найти номер или количество слов с условием. Слова перебираются в нужном порядке через itertools.product.
+    prerequisites: [itertools-enumeration, logical-ops]
+
+  - id: ege-table-rows
+    kind: ege-task
+    egeNumber: 9
+    title: Обработка строк таблицы
+    description: Нужно посчитать строки таблицы чисел, для которых выполнены условия — например, все числа различны. Кодом таблицу читают построчно и проверяют каждую строку.
+    prerequisites: [file-numbers, sets, list-functions]
+
+  - id: ege-subnet-mask
+    kind: ege-task
+    egeNumber: 10
+    title: Маска подсети
+    description: По IP-адресу узла и маске нужно найти адрес сети или посчитать адреса с условием. Адрес сети — поразрядная конъюнкция адреса и маски.
+    prerequisites: [bitwise, split-input]
+
+  - id: ege-executor-programs
+    kind: ege-task
+    egeNumber: 13
+    title: Число программ исполнителя
+    description: Исполнитель меняет число командами; нужно посчитать программы, переводящие одно число в другое. Решается рекурсивной функцией, которая перебирает команды.
+    prerequisites: [recursion, div-mod]
+
+  - id: ege-number-systems
+    kind: ege-task
+    egeNumber: 14
+    title: Системы счисления
+    description: Выражение в системе счисления с неизвестной цифрой или запись большого числа в другой системе. Решается переводом через int с основанием и разбором числа на цифры в цикле.
+    prerequisites: [number-systems, base-conversion]
+
+  - id: ege-logic-divisibility
+    kind: ege-task
+    egeNumber: 15
+    title: Логическое выражение с параметром
+    description: Нужно найти параметр, при котором логическое выражение истинно для всех x. Решается перебором параметра и x во вложенных циклах.
+    prerequisites: [bool-expressions, nested-loops, div-mod]
+
+  - id: ege-recursion
+    kind: ege-task
+    egeNumber: 16
+    title: Рекуррентная функция
+    description: Функция задана рекуррентными соотношениями; нужно вычислить выражение от её значений. Решается рекурсией с запоминанием или вычислением значений по порядку.
+    prerequisites: [dp-memo]
+
+  - id: ege-sequence-pairs
+    kind: ege-task
+    egeNumber: 17
+    title: Пары в последовательности
+    description: В последовательности из файла нужно найти количество пар соседних элементов с условием и максимум их сумм. Решается одним проходом по списку.
+    prerequisites: [file-numbers, list-functions]
+
+  - id: ege-games
+    kind: ege-task
+    egeNumber: 19–21
+    title: Теория игр
+    description: Два игрока по очереди меняют кучи камней; нужно найти значения, при которых у игрока есть выигрышная стратегия с заданным числом ходов. Три задания об одной игре решаются одной рекурсивной функцией.
+    prerequisites: [game-strategy]
+
+  - id: ege-processes
+    kind: ege-task
+    egeNumber: 22
+    title: Параллельные процессы
+    description: Процессы зависят друг от друга; нужно найти время их выполнения или число процессов, идущих одновременно. Время начала каждого процесса считается рекурсией с запоминанием.
+    prerequisites: [dp-memo, file-numbers]
+
+  - id: ege-dag-paths
+    kind: ege-task
+    egeNumber: 23
+    title: Пути в графе
+    description: По рёбрам ациклического графа из файла нужно найти кратчайший путь или количество путей между вершинами. Решается динамикой по вершинам графа.
+    prerequisites: [dag-paths, file-numbers]
+
+  - id: ege-string-processing
+    kind: ege-task
+    egeNumber: 24
+    title: Обработка строки из файла
+    description: В длинной строке из файла нужно найти самую длинную подстроку с заданными свойствами. Решается одним проходом по символам с запоминанием текущего участка.
+    prerequisites: [file-read, string-loop]
+
+  - id: ege-number-search
+    kind: ege-task
+    egeNumber: 25
+    title: Поиск чисел с условием
+    description: Нужно найти числа с заданными делителями или подходящие под маску из цифр. Решается перебором чисел с быстрой проверкой делителей.
+    prerequisites: [primes, itertools-enumeration, string-methods]
+
+  - id: ege-sorting-processing
+    kind: ege-task
+    egeNumber: 26
+    title: Обработка данных с сортировкой
+    description: По большому файлу данных нужно смоделировать процесс и найти итоговые величины. Решается сортировкой, жадным выбором и словарями для накопления.
+    prerequisites: [file-numbers, greedy, dict-basics]
+
+  - id: ege-data-analysis
+    kind: ege-task
+    egeNumber: 27
+    title: Анализ данных и кластеры
+    description: Точки из файла нужно разбить на кластеры, найти центры и вычислить характеристики. Решается сортировкой по признаку, разбиением на группы и перебором пар точек.
+    prerequisites: [file-numbers, math-module, lambda-key, nested-loops]

@@ -42,3 +42,9 @@ nodes:
     title: Цифры числа
     description: Разбор числа на цифры делением и остатком в цикле while. Встречается и в олимпиадных задачах, и в заданиях ЕГЭ.
     prerequisites: [while-loop, div-mod]
+
+  - id: turtle-graphics
+    kind: topic
+    title: Черепашья графика
+    description: Модуль turtle рисует линии командами вперёд, назад и поворот, в том числе в цикле. Позволяет увидеть фигуру, которую задаёт алгоритм.
+    prerequisites: [for-range]

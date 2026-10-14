@@ -1,5 +1,4 @@
 # «Основы Python» — первая ступень обеих целей (согласовано с автором).
-# Следующие ступени ЕГЭ добавляются в задаче №6.
 goals:
   - id: ege
     title: ЕГЭ
@@ -31,6 +30,15 @@ goals:
           - lambda-key
           - recursion
           - file-numbers
+      - id: ege-basic
+        title: Базовые задания
+        targets: [ege-truth-table, ege-number-algorithm, ege-turtle, ege-words, ege-table-rows, ege-subnet-mask]
+      - id: ege-intermediate
+        title: Задания повышенного уровня
+        targets: [ege-executor-programs, ege-number-systems, ege-logic-divisibility, ege-recursion, ege-sequence-pairs, ege-games, ege-processes, ege-dag-paths]
+      - id: ege-advanced
+        title: Задания высокого уровня
+        targets: [ege-string-processing, ege-number-search, ege-sorting-processing, ege-data-analysis]
   - id: olympiad
     title: Олимпиады
     stages:

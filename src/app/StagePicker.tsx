@@ -1,4 +1,5 @@
-import { chooseGoal, type LearningMap, type StageChoice } from '../core';
+import { useState } from 'react';
+import type { LearningMap, StageChoice } from '../core';
 
 interface Props {
   map: LearningMap;
@@ -6,17 +7,24 @@ interface Props {
   onChange: (stage: StageChoice) => void;
 }
 
-/** Выбор цели и ступени внутри неё. */
+/**
+ * Выбор цели и ступени внутри неё. Ступень ученик выбирает сам: после выбора
+ * или смены цели ступень не выбрана.
+ */
 export function StagePicker({ map, stage, onChange }: Props) {
-  const goal = map.goals.find((g) => g.id === stage?.goalId);
+  const [goalId, setGoalId] = useState(stage?.goalId ?? '');
+  const goal = map.goals.find((g) => g.id === goalId);
 
   return (
     <div className="stage-picker">
       <label>
         Цель
         <select
-          value={goal?.id ?? ''}
-          onChange={(e) => onChange(chooseGoal(map, e.target.value))}
+          value={goalId}
+          onChange={(e) => {
+            setGoalId(e.target.value);
+            onChange(null);
+          }}
         >
           <option value="">Не выбрана</option>
           {map.goals.map((g) => (
@@ -31,9 +39,9 @@ export function StagePicker({ map, stage, onChange }: Props) {
         <select
           value={stage?.stageId ?? ''}
           disabled={!goal}
-          onChange={(e) => goal && onChange({ goalId: goal.id, stageId: e.target.value })}
+          onChange={(e) => goal && onChange(e.target.value ? { goalId: goal.id, stageId: e.target.value } : null)}
         >
-          {!goal && <option value="">—</option>}
+          <option value="">{goal ? 'Выберите ступень' : '—'}</option>
           {goal?.stages.map((s) => (
             <option key={s.id} value={s.id}>
               {s.title}

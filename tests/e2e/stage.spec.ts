@@ -30,8 +30,13 @@ test('выбор ступени делит узлы на виды и счита�
   await page.goto('/');
 
   await goal(page).selectOption({ label: 'Экзамен' });
-  // При выборе цели сразу выбирается её первая ступень.
-  await expect(stage(page)).toHaveValue('exam-1');
+  // Ступень ученик выбирает сам; пока она не выбрана, вне ступени нет никого.
+  await expect(stage(page)).toBeEnabled();
+  await expect(stage(page)).toHaveValue('');
+  await expectViews(page, { b1: 'ahead', 'exam-1': 'ahead' });
+  await expect(total(page)).toHaveText('Освоено 0 из 4');
+
+  await stage(page).selectOption({ label: 'Ступень 1' });
   await expectViews(page, { a1: 'available', a2: 'ahead', b1: 'outside', 'exam-1': 'outside' });
   await expect(total(page)).toHaveText('Освоено 0 из 2');
   await expect(sectionCount(page, 'alpha')).toHaveText('0 из 2');
@@ -60,8 +65,12 @@ test('смена цели не меняет прогресс, а выбранн�
   await page.goto('/');
   await mark(page, 'a2');
 
+  await goal(page).selectOption({ label: 'Экзамен' });
+  await stage(page).selectOption({ label: 'Ступень 2' });
+  // Смена цели сбрасывает ступень.
   await goal(page).selectOption({ label: 'Олимпиада' });
-  await expect(stage(page)).toHaveValue('olymp-1');
+  await expect(stage(page)).toHaveValue('');
+  await stage(page).selectOption({ label: 'Первый этап' });
   // Освоенный узел вне ступени всё равно виден освоенным.
   await expectViews(page, { a1: 'mastered', a2: 'mastered', b1: 'outside' });
   await expect(total(page)).toHaveText('Освоено 1 из 1');

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { chooseGoal, nodeViews, normalizeStage, progressCount } from '.';
+import { nodeViews, normalizeStage, progressCount } from '.';
 import { testMap } from './testing';
 
 const views = (result: Map<string, string>) => Object.fromEntries(result);
@@ -75,19 +75,6 @@ describe('progressCount', () => {
       { sectionId: 'b', mastered: 0, total: 2 },
       { sectionId: 'c', mastered: 0, total: 1 },
     ]);
-  });
-});
-
-describe('chooseGoal', () => {
-  const map = testMap({ nodes: { a: [], b: [] }, goals: { ege: [['a'], ['b']], empty: [] } });
-
-  it('выбирает первую ступень цели', () => {
-    expect(chooseGoal(map, 'ege')).toEqual({ goalId: 'ege', stageId: 'ege-1' });
-  });
-
-  it('без цели или у цели без ступеней ступень не выбрана', () => {
-    expect(chooseGoal(map, '')).toBeNull();
-    expect(chooseGoal(map, 'empty')).toBeNull();
   });
 });
 

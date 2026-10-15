@@ -6,12 +6,6 @@ import { stageNodes } from './stages';
 /** Выбранная учеником ступень; `null` — ступень не выбрана. */
 export type StageChoice = { goalId: string; stageId: string } | null;
 
-/** Выбор цели: сразу выбирается её первая ступень. Пустая цель — ступень не выбрана. */
-export function chooseGoal(map: LearningMap, goalId: string): StageChoice {
-  const stage = map.goals.find((g) => g.id === goalId)?.stages[0];
-  return stage ? { goalId, stageId: stage.id } : null;
-}
-
 /** Сохранённая ступень; если её уже нет на карте или запись испорчена, она молча забывается. */
 export function normalizeStage(map: LearningMap, saved: unknown): StageChoice {
   const { goalId, stageId } = (typeof saved === 'object' && saved !== null ? saved : {}) as Record<string, unknown>;

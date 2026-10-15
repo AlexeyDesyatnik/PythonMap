@@ -28,8 +28,8 @@ interface View {
 const MIN_K = 0.25;
 const MAX_K = 2.5;
 const PAD = 16;
-/** Сдвиг мыши, после которого нажатие считается перетаскиванием, а не щелчком. */
-const DRAG_THRESHOLD = 4;
+/** Сдвиг, после которого нажатие считается перетаскиванием, а не щелчком. Палец дрожит сильнее мыши. */
+const DRAG_THRESHOLD = { mouse: 4, touch: 10 };
 
 const clampK = (k: number) => Math.min(MAX_K, Math.max(MIN_K, k));
 
@@ -43,6 +43,8 @@ export function PanZoom({ width, height, contentKey, focus, label, readableScale
   const touched = useRef(false);
   const drag = useRef<{ id: number; sx: number; sy: number; vx: number; vy: number; moved: boolean } | null>(null);
   const suppressClick = useRef(false);
+  // Палец поднят без сдвига — это касание; щелчок по нему делается при отпускании.
+  const tapPending = useRef(false);
 
   useLayoutEffect(() => {
     const el = ref.current!;
@@ -112,6 +114,10 @@ export function PanZoom({ width, height, contentKey, focus, label, readableScale
         className="map-canvas"
         onPointerDown={(e) => {
           if (e.button !== 0) return;
+          // После перетаскивания пальцем щелчка не бывает, и запрет на щелчок мог остаться
+          // от прошлого жеста — новое касание его сбрасывает, иначе оно бы потерялось.
+          suppressClick.current = false;
+          tapPending.current = false;
           drag.current = { id: e.pointerId, sx: e.clientX, sy: e.clientY, vx: view.x, vy: view.y, moved: false };
         }}
         onPointerMove={(e) => {
@@ -119,7 +125,7 @@ export function PanZoom({ width, height, contentKey, focus, label, readableScale
           if (!d || d.id !== e.pointerId) return;
           const dx = e.clientX - d.sx;
           const dy = e.clientY - d.sy;
-          if (!d.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+          if (!d.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD[e.pointerType === 'mouse' ? 'mouse' : 'touch']) return;
           if (!d.moved) {
             d.moved = true;
             touched.current = true;
@@ -128,9 +134,25 @@ export function PanZoom({ width, height, contentKey, focus, label, readableScale
           setView((v) => ({ ...v, x: d.vx + dx, y: d.vy + dy }));
         }}
         onPointerUp={(e) => {
-          if (drag.current?.moved) suppressClick.current = true;
+          const d = drag.current;
           drag.current = null;
           if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
+          if (d?.moved) {
+            suppressClick.current = true;
+          } else if (d && e.pointerType !== 'mouse') {
+            tapPending.current = true;
+          }
+        }}
+        onTouchEnd={(e) => {
+          // Касание пальцем браузер иногда не превращает в щелчок, и узел открывался
+          // только со второго раза. Поэтому щелчок по касанию делаем сами, а браузерный
+          // отменяем, пока под пальцем ещё ничего не сменилось: иначе он попал бы в то,
+          // что откроется, например в отметку «Освоен» на всплывшей панели узла.
+          if (tapPending.current && e.cancelable) {
+            e.preventDefault();
+            e.target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+          }
+          tapPending.current = false;
         }}
         onPointerCancel={(e) => {
           drag.current = null;

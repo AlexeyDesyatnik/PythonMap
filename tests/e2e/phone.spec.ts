@@ -21,6 +21,47 @@ async function expectNoHorizontalScroll(page: Page) {
   expect(scroll).toBeLessThanOrEqual(client);
 }
 
+/** Касание пальцем: опустить, провести по точкам и поднять — как настоящий жест на телефоне. */
+async function touch(page: Page, points: { x: number; y: number }[]) {
+  const cdp = await page.context().newCDPSession(page);
+  const send = (type: 'touchStart' | 'touchMove' | 'touchEnd', p?: { x: number; y: number }) =>
+    cdp.send('Input.dispatchTouchEvent', { type, touchPoints: p ? [p] : [] });
+  await send('touchStart', points[0]);
+  for (const p of points.slice(1)) await send('touchMove', p);
+  await send('touchEnd');
+  await cdp.detach();
+}
+
+const centre = async (page: Page, selector: string) => {
+  const b = (await page.locator(selector).boundingBox())!;
+  return { x: b.x + b.width / 2, y: b.y + b.height / 2 };
+};
+
+test('на телефоне узел открывается с первого касания, даже если перед этим граф двигали', async ({ page }) => {
+  await page.goto('/');
+  await sectionList(page).getByRole('button', { name: /Раздел Альфа/ }).tap();
+
+  // Граф сдвинули пальцем вбок и отпустили.
+  const start = await centre(page, '[data-node="a1"]');
+  await touch(page, [start, { x: start.x + 20, y: start.y }, { x: start.x + 40, y: start.y }]);
+  await expect(nodePanel(page)).toHaveCount(0);
+  // Пауза, как у живого человека: касание вплотную за жестом браузер щелчком не считает.
+  await page.waitForTimeout(400);
+
+  // Первое же касание узла открывает его.
+  await touch(page, [await centre(page, '[data-node="a1"]')]);
+  await expect(nodePanel(page)).toContainText('Тема А1');
+});
+
+test('на телефоне палец, чуть дрогнувший при касании, всё равно открывает узел', async ({ page }) => {
+  await page.goto('/');
+  await sectionList(page).getByRole('button', { name: /Раздел Альфа/ }).tap();
+
+  const { x, y } = await centre(page, '[data-node="a2"]');
+  await touch(page, [{ x, y }, { x: x + 3, y: y + 2 }, { x: x + 6, y: y + 3 }]);
+  await expect(nodePanel(page)).toContainText('Тема А2');
+});
+
 test('на телефоне первым идёт маршрут, а вместо обзора — список разделов со счётом', async ({ page }) => {
   await page.goto('/');
   await chooseStage(page);

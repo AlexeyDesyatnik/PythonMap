@@ -45,6 +45,12 @@ body {
 }
 
 .app {
+  /* Страница не прокручивается: карта занимает остаток окна и прокручивается сама,
+     поэтому обе её полосы прокрутки всегда на экране. */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
   padding: 16px;
 }
 
@@ -96,12 +102,15 @@ body {
 
 .app-body {
   display: flex;
+  flex: 1;
+  min-height: 0;
   gap: 16px;
   align-items: flex-start;
 }
 
 .app-body .map-scroll {
   flex: 1;
+  align-self: stretch;
   min-width: 0;
 }
 
@@ -136,8 +145,7 @@ body {
 }
 
 .node-panel {
-  position: sticky;
-  top: 16px;
+  position: relative;
   width: 300px;
   flex: none;
   box-sizing: border-box;
@@ -233,7 +241,7 @@ body {
   }
 
   .node-panel {
-    position: static;
+    order: -1;
     width: 100%;
   }
 }

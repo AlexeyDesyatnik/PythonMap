@@ -1,8 +1,16 @@
 import { useMemo } from 'react';
-import type { LearningMap } from '../core';
+import type { LearningMap, Progress } from '../core';
 import { simpleLayout } from '../layout/simple';
+import { nodeLabel } from './labels';
 
-export function MapView({ map }: { map: LearningMap }) {
+interface Props {
+  map: LearningMap;
+  progress: Progress;
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+}
+
+export function MapView({ map, progress, selectedId, onSelect }: Props) {
   const layout = useMemo(() => simpleLayout(map), [map]);
   const nodes = new Map(map.nodes.map((n) => [n.id, n]));
   const sections = new Map(map.sections.map((s) => [s.id, s]));
@@ -44,13 +52,32 @@ export function MapView({ map }: { map: LearningMap }) {
 
         {layout.nodes.map((box) => {
           const node = nodes.get(box.id)!;
-          const lines = wrap(node.kind === 'ege-task' ? `${node.egeNumber}. ${node.title}` : node.title, 24);
+          const label = nodeLabel(node);
+          const lines = wrap(label, 24);
+          const mastered = progress.has(node.id);
           const lineH = 16;
           const top = box.y + box.height / 2 - ((lines.length - 1) * lineH) / 2;
           return (
-            <g key={box.id} data-node={node.id} data-section-of={node.sectionId}>
+            <g
+              key={box.id}
+              data-node={node.id}
+              data-section-of={node.sectionId}
+              data-mastered={mastered}
+              className="node-group"
+              role="button"
+              tabIndex={0}
+              aria-label={mastered ? `${label}, освоен` : label}
+              aria-pressed={node.id === selectedId}
+              onClick={() => onSelect(node.id)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelect(node.id);
+                }
+              }}
+            >
               <rect
-                className={`node node-${node.kind}`}
+                className={`node node-${node.kind}${mastered ? ' node-mastered' : ''}${node.id === selectedId ? ' node-selected' : ''}`}
                 x={box.x}
                 y={box.y}
                 width={box.width}
@@ -64,6 +91,11 @@ export function MapView({ map }: { map: LearningMap }) {
                   </tspan>
                 ))}
               </text>
+              {mastered && (
+                <text className="node-check" x={box.x + box.width - 14} y={box.y + 15} textAnchor="middle" aria-hidden>
+                  ✓
+                </text>
+              )}
             </g>
           );
         })}

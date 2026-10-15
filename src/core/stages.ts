@@ -18,13 +18,27 @@ export function stageNodes(map: LearningMap, goalId: string, stageId: string): S
 /** Узлы вместе со всеми их пререквизитами по цепочке. */
 export function withPrerequisites(map: LearningMap, ids: Iterable<string>): Set<string> {
   const prerequisites = new Map(map.nodes.map((n) => [n.id, n.prerequisites]));
+  return reachable(ids, prerequisites);
+}
+
+/** Узлы вместе со всеми, кто опирается на них по цепочке. */
+export function withReliantNodes(map: LearningMap, ids: Iterable<string>): Set<string> {
+  const reliant = new Map(map.nodes.map((n) => [n.id, [] as string[]]));
+  for (const node of map.nodes) {
+    for (const p of node.prerequisites) reliant.get(p)?.push(node.id);
+  }
+  return reachable(ids, reliant);
+}
+
+/** Всё, куда можно дойти от `ids` по стрелкам `next`; узлы не из `next` пропускаются. */
+function reachable(ids: Iterable<string>, next: Map<string, string[]>): Set<string> {
   const result = new Set<string>();
   const stack = [...ids];
   while (stack.length > 0) {
     const id = stack.pop()!;
-    if (result.has(id) || !prerequisites.has(id)) continue;
+    if (result.has(id) || !next.has(id)) continue;
     result.add(id);
-    stack.push(...prerequisites.get(id)!);
+    stack.push(...next.get(id)!);
   }
   return result;
 }

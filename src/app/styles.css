@@ -9,6 +9,11 @@
   --ege-bg: #fbf1e6;
   --ege-border: #d39a5c;
   --edge: #9aa3ae;
+  --mastered-bg: #dcf1e0;
+  --mastered-border: #3f9a55;
+  --selected: #1f6feb;
+  --panel-bg: #ffffff;
+  --danger: #c4372f;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color: var(--text);
   background: var(--bg);
@@ -26,6 +31,11 @@
     --ege-bg: #3e2e1f;
     --ege-border: #a8763f;
     --edge: #6c7480;
+    --mastered-bg: #1e3b26;
+    --mastered-border: #4fb469;
+    --selected: #58a6ff;
+    --panel-bg: #202328;
+    --danger: #e5534b;
   }
 }
 
@@ -82,4 +92,148 @@ body {
 
 .arrow-head {
   fill: var(--edge);
+}
+
+.app-body {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.app-body .map-scroll {
+  flex: 1;
+  min-width: 0;
+}
+
+.node-group {
+  cursor: pointer;
+}
+
+.node-group:focus {
+  outline: none;
+}
+
+.node-group:focus-visible .node {
+  stroke: var(--selected);
+  stroke-width: 2;
+}
+
+.node-mastered {
+  fill: var(--mastered-bg);
+  stroke: var(--mastered-border);
+  stroke-width: 1.5;
+}
+
+.node-selected {
+  stroke: var(--selected);
+  stroke-width: 3;
+}
+
+.node-check {
+  fill: var(--mastered-border);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.node-panel {
+  position: sticky;
+  top: 16px;
+  width: 300px;
+  flex: none;
+  box-sizing: border-box;
+  padding: 16px;
+  background: var(--panel-bg);
+  border: 1px solid var(--section-border);
+  border-radius: 10px;
+}
+
+.node-panel-title {
+  margin: 0 28px 12px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.node-panel-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.node-panel-mark {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.node-panel-mark input {
+  width: 18px;
+  height: 18px;
+}
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgb(0 0 0 / 40%);
+}
+
+.dialog {
+  max-width: 420px;
+  padding: 20px;
+  background: var(--panel-bg);
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgb(0 0 0 / 30%);
+}
+
+.dialog p {
+  margin: 0 0 8px;
+}
+
+.dialog ul {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.dialog-actions button {
+  padding: 6px 14px;
+  font: inherit;
+  border: 1px solid var(--section-border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.dialog-actions .danger {
+  border-color: var(--danger);
+  background: var(--danger);
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .app-body {
+    flex-direction: column;
+  }
+
+  .node-panel {
+    position: static;
+    width: 100%;
+  }
 }

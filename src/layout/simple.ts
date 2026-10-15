@@ -23,7 +23,7 @@ const NODE_W = 190;
 const NODE_H = 52;
 const NODE_GAP = 18;
 const PAD = 16;
-const HEADER = 34;
+const HEADER = 50;
 const COLUMN_GAP = 70;
 const MARGIN = 20;
 

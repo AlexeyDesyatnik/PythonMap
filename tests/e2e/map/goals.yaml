@@ -8,3 +8,9 @@ goals:
       - id: exam-2
         title: Ступень 2
         targets: [exam-1]
+  - id: olymp
+    title: Олимпиада
+    stages:
+      - id: olymp-1
+        title: Первый этап
+        targets: [a1]

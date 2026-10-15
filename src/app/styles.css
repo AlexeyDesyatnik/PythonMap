@@ -54,10 +54,91 @@ body {
   padding: 16px;
 }
 
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
 .app-title {
-  margin: 0 0 12px;
+  margin: 0;
   font-size: 20px;
   font-weight: 600;
+}
+
+.stage-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.stage-picker label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stage-picker select {
+  padding: 4px 6px;
+  font: inherit;
+  color: var(--text);
+  background: var(--panel-bg);
+  border: 1px solid var(--section-border);
+  border-radius: 6px;
+}
+
+.progress-total {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.legend-item {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.legend-item::before {
+  content: '';
+  width: 14px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 2px solid var(--node-border);
+  border-radius: 3px;
+  background: var(--node-bg);
+}
+
+.legend-mastered::before {
+  border-color: var(--mastered-border);
+  background: var(--mastered-bg);
+}
+
+.legend-ahead::before {
+  border-width: 1px;
+  border-color: var(--section-border);
+  background: var(--section-bg);
+}
+
+.legend-outside::before {
+  border: 1px dashed var(--section-border);
+  background: none;
+  opacity: 0.6;
 }
 
 .map-scroll {
@@ -83,6 +164,11 @@ body {
 .node-ege-task {
   fill: var(--ege-bg);
   stroke: var(--ege-border);
+}
+
+.section-count {
+  fill: var(--muted);
+  font-size: 12px;
 }
 
 .node-title {
@@ -125,6 +211,29 @@ body {
 .node-group:focus-visible .node {
   stroke: var(--selected);
   stroke-width: 2;
+}
+
+.node-available {
+  stroke-width: 2;
+}
+
+.node-ahead {
+  fill: var(--section-bg);
+  stroke: var(--section-border);
+}
+
+.view-ahead .node-title {
+  fill: var(--muted);
+}
+
+.node-outside {
+  fill: none;
+  stroke: var(--section-border);
+  stroke-dasharray: 4 3;
+}
+
+.view-outside {
+  opacity: 0.45;
 }
 
 .node-mastered {

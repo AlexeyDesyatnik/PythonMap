@@ -1,25 +1,43 @@
 // Прогресс хранится только в браузере ученика (ADR 0001): полный набор
-// идентификаторов освоенных узлов. Браузер может не дать доступа к хранилищу
-// (приватный режим, запрет сайтов) — тогда карта просто работает без сохранения.
-import { normalizeProgress, type LearningMap, type Progress } from '../core';
+// идентификаторов освоенных узлов и выбранная ступень. Браузер может не дать
+// доступа к хранилищу (приватный режим, запрет сайтов) — тогда карта просто
+// работает без сохранения.
+import { normalizeProgress, normalizeStage, type LearningMap, type Progress, type StageChoice } from '../core';
 
 const PROGRESS_KEY = 'python-map/progress';
+const STAGE_KEY = 'python-map/stage';
 
 export function loadProgress(map: LearningMap): Set<string> {
-  let ids: unknown = [];
-  try {
-    ids = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '[]');
-  } catch {
-    // Испорченная или недоступная запись — начинаем с пустого прогресса.
-  }
+  const ids = read(PROGRESS_KEY);
   const valid = Array.isArray(ids) ? ids.filter((id): id is string => typeof id === 'string') : [];
   return normalizeProgress(map, valid);
 }
 
 export function saveProgress(progress: Progress): void {
+  write(PROGRESS_KEY, [...progress]);
+}
+
+export function loadStage(map: LearningMap): StageChoice {
+  return normalizeStage(map, read(STAGE_KEY));
+}
+
+export function saveStage(stage: StageChoice): void {
+  write(STAGE_KEY, stage);
+}
+
+function read(key: string): unknown {
   try {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify([...progress]));
+    return JSON.parse(localStorage.getItem(key) ?? 'null');
   } catch {
-    // Без хранилища прогресс живёт до закрытия страницы.
+    // Испорченная или недоступная запись — как будто её нет.
+    return null;
+  }
+}
+
+function write(key: string, value: unknown): void {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Без хранилища выбор живёт до закрытия страницы.
   }
 }

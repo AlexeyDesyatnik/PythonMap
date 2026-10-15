@@ -1,19 +1,22 @@
 import { useMemo } from 'react';
-import type { LearningMap, Progress } from '../core';
+import type { LearningMap, NodeView, SectionCount } from '../core';
 import { simpleLayout } from '../layout/simple';
-import { nodeLabel } from './labels';
+import { nodeLabel, VIEW_TITLES } from './labels';
 
 interface Props {
   map: LearningMap;
-  progress: Progress;
+  views: ReadonlyMap<string, NodeView>;
+  /** Счёт по разделам; раздела без узлов ступени здесь нет. */
+  sectionCounts: SectionCount[];
   selectedId: string | null;
   onSelect: (id: string) => void;
 }
 
-export function MapView({ map, progress, selectedId, onSelect }: Props) {
+export function MapView({ map, views, sectionCounts, selectedId, onSelect }: Props) {
   const layout = useMemo(() => simpleLayout(map), [map]);
   const nodes = new Map(map.nodes.map((n) => [n.id, n]));
   const sections = new Map(map.sections.map((s) => [s.id, s]));
+  const counts = new Map(sectionCounts.map((c) => [c.sectionId, c]));
 
   return (
     <div className="map-scroll">
@@ -31,14 +34,22 @@ export function MapView({ map, progress, selectedId, onSelect }: Props) {
           </marker>
         </defs>
 
-        {layout.sections.map((box) => (
-          <g key={box.id} data-section={box.id}>
-            <rect className="section" x={box.x} y={box.y} width={box.width} height={box.height} rx={10} />
-            <text className="section-title" x={box.x + 14} y={box.y + 23}>
-              {sections.get(box.id)!.title}
-            </text>
-          </g>
-        ))}
+        {layout.sections.map((box) => {
+          const count = counts.get(box.id);
+          return (
+            <g key={box.id} data-section={box.id}>
+              <rect className="section" x={box.x} y={box.y} width={box.width} height={box.height} rx={10} />
+              <text className="section-title" x={box.x + 14} y={box.y + 23}>
+                {sections.get(box.id)!.title}
+              </text>
+              {count && (
+                <text className="section-count" data-section-count={box.id} x={box.x + 14} y={box.y + 42}>
+                  {count.mastered} из {count.total}
+                </text>
+              )}
+            </g>
+          );
+        })}
 
         {layout.edges.map((e) => (
           <path
@@ -54,7 +65,8 @@ export function MapView({ map, progress, selectedId, onSelect }: Props) {
           const node = nodes.get(box.id)!;
           const label = nodeLabel(node);
           const lines = wrap(label, 24);
-          const mastered = progress.has(node.id);
+          const view = views.get(node.id)!;
+          const mastered = view === 'mastered';
           const lineH = 16;
           const top = box.y + box.height / 2 - ((lines.length - 1) * lineH) / 2;
           return (
@@ -63,10 +75,11 @@ export function MapView({ map, progress, selectedId, onSelect }: Props) {
               data-node={node.id}
               data-section-of={node.sectionId}
               data-mastered={mastered}
-              className="node-group"
+              data-view={view}
+              className={`node-group view-${view}`}
               role="button"
               tabIndex={0}
-              aria-label={mastered ? `${label}, освоен` : label}
+              aria-label={`${label}, ${VIEW_TITLES[view]}`}
               aria-pressed={node.id === selectedId}
               onClick={() => onSelect(node.id)}
               onKeyDown={(e) => {
@@ -77,7 +90,7 @@ export function MapView({ map, progress, selectedId, onSelect }: Props) {
               }}
             >
               <rect
-                className={`node node-${node.kind}${mastered ? ' node-mastered' : ''}${node.id === selectedId ? ' node-selected' : ''}`}
+                className={`node node-${node.kind} node-${view}${node.id === selectedId ? ' node-selected' : ''}`}
                 x={box.x}
                 y={box.y}
                 width={box.width}

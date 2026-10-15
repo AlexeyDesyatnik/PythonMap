@@ -139,8 +139,231 @@ body {
   opacity: 0.6;
 }
 
-.map-scroll {
-  overflow: auto;
+.map-area {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-self: stretch;
+  min-width: 0;
+  background: var(--section-bg);
+  border: 1px solid var(--section-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.map-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 32px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--section-border);
+}
+
+.map-heading {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.map-back,
+.zoom-controls button {
+  padding: 4px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--panel-bg);
+  border: 1px solid var(--section-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.map-back:hover,
+.zoom-controls button:hover {
+  border-color: var(--selected);
+}
+
+.map-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.map-canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.map-canvas:active {
+  cursor: grabbing;
+}
+
+.map {
+  display: block;
+}
+
+.zoom-controls {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zoom-controls button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.section-group,
+.block-group {
+  cursor: pointer;
+}
+
+.section-group:focus,
+.block-group:focus {
+  outline: none;
+}
+
+.section-group:hover .section,
+.section-group:focus-visible .section,
+.block-group:hover .block,
+.block-group:focus-visible .block {
+  stroke: var(--selected);
+  stroke-width: 2;
+}
+
+.section-group.on-route .section {
+  stroke: var(--route);
+  stroke-width: 2;
+}
+
+.section-size {
+  fill: var(--muted);
+  font-size: 13px;
+}
+
+/* Блок без заливки должен ловить щелчок всей площадью, а не только рамкой. */
+.block,
+.node {
+  pointer-events: all;
+}
+
+.block {
+  fill: none;
+  stroke: var(--section-border);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.block-title {
+  fill: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.block-item {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.block-item-mark {
+  fill: var(--route);
+  font-weight: 600;
+}
+
+.task-row-rule {
+  stroke: var(--section-border);
+}
+
+.task-row-title {
+  fill: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.node-note {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.side-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 280px;
+  flex: none;
+  align-self: stretch;
+  min-height: 0;
+}
+
+.section-topics {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 14px 12px;
+  background: var(--panel-bg);
+  border: 1px solid var(--section-border);
+  border-radius: 10px;
+}
+
+.section-topics-title {
+  margin: 0 0 8px 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.section-topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.section-topic {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 6px 6px;
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.section-topic:hover {
+  background: var(--bg);
+}
+
+.section-topic[aria-pressed='true'] {
+  border-color: var(--selected);
+}
+
+.section-topic-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.section-topic-description {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--muted);
 }
 
 .section {
@@ -149,8 +372,8 @@ body {
 }
 
 .section-title {
-  fill: var(--muted);
-  font-size: 14px;
+  fill: var(--text);
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -161,7 +384,7 @@ body {
 
 .section-count {
   fill: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .node-title {
@@ -185,12 +408,6 @@ body {
   min-height: 0;
   gap: 16px;
   align-items: flex-start;
-}
-
-.app-body .map-scroll {
-  flex: 1;
-  align-self: stretch;
-  min-width: 0;
 }
 
 .node-group {
@@ -248,7 +465,6 @@ body {
 
 .node-panel {
   position: relative;
-  width: 300px;
   flex: none;
   box-sizing: border-box;
   padding: 16px;
@@ -367,7 +583,7 @@ body {
 }
 
 .route-panel {
-  width: 250px;
+  width: 240px;
   flex: none;
   align-self: stretch;
   overflow-y: auto;
@@ -473,8 +689,12 @@ body {
     flex: none;
   }
 
-  .node-panel {
+  .side-panels {
     order: -1;
     width: 100%;
+  }
+
+  .map-area {
+    min-height: 60vh;
   }
 }

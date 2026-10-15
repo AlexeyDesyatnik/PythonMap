@@ -1,7 +1,7 @@
 // Проверка данных карты. Ошибки не дают опубликовать карту, предупреждения
 // подсказывают, что стоит улучшить.
-import type { LearningMap, MapNode } from './map';
-import { stageNodes } from './stages';
+import type { LearningMap, MapNode } from './map.ts';
+import { stageNodes } from './stages.ts';
 
 export type IssueCode =
   | 'duplicate-id'

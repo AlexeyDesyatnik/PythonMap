@@ -1,9 +1,9 @@
 // Маршрут до выбранной ступени: неосвоенные узлы ступени в порядке, который
 // не нарушает пререквизиты.
-import type { LearningMap } from './map';
-import type { Progress } from './progress';
-import { stageNodes } from './stages';
-import type { StageChoice } from './views';
+import type { LearningMap } from './map.ts';
+import type { Progress } from './progress.ts';
+import { stageNodes } from './stages.ts';
+import type { StageChoice } from './views.ts';
 
 /** Маршрут; первый узел — следующий шаг. Пустой маршрут — ступень достигнута. */
 export function route(map: LearningMap, progress: Progress, stage: NonNullable<StageChoice>): string[] {

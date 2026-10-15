@@ -1,19 +1,23 @@
 import { expect, test, type Page } from '@playwright/test';
+import { node, toOverview } from './helpers';
 
-const node = (page: Page, id: string) => page.locator(`[data-node="${id}"]`);
 const goal = (page: Page) => page.getByRole('combobox', { name: 'Цель' });
 const stage = (page: Page) => page.getByRole('combobox', { name: 'Ступень' });
 const total = (page: Page) => page.getByTestId('progress-total');
-const sectionCount = (page: Page, id: string) => page.locator(`[data-section-count="${id}"]`);
+/** Счёт раздела виден на обзоре. */
+async function sectionCount(page: Page, id: string) {
+  await toOverview(page);
+  return page.locator(`[data-section-count="${id}"]`);
+}
 const masteredBox = (page: Page) =>
   page.getByRole('region', { name: 'Узел' }).getByRole('checkbox', { name: 'Освоен' });
 
 async function expectViews(page: Page, views: Record<string, string>) {
-  for (const [id, view] of Object.entries(views)) await expect(node(page, id)).toHaveAttribute('data-view', view);
+  for (const [id, view] of Object.entries(views)) await expect(await node(page, id)).toHaveAttribute('data-view', view);
 }
 
 async function mark(page: Page, id: string) {
-  await node(page, id).click();
+  await (await node(page, id)).click();
   await masteredBox(page).check();
 }
 
@@ -39,23 +43,24 @@ test('выбор ступени делит узлы на виды и счита�
   await stage(page).selectOption({ label: 'Ступень 1' });
   await expectViews(page, { a1: 'available', a2: 'ahead', b1: 'outside', 'exam-1': 'outside' });
   await expect(total(page)).toHaveText('Освоено 0 из 2');
-  await expect(sectionCount(page, 'alpha')).toHaveText('0 из 2');
-  await expect(sectionCount(page, 'beta')).toHaveCount(0);
+  await expect(await sectionCount(page, 'alpha')).toHaveText('0 из 2');
+  await expect(await sectionCount(page, 'beta')).toHaveCount(0);
 
   // Отметка сразу меняет виды и счёт.
   await mark(page, 'a1');
   await expectViews(page, { a1: 'mastered', a2: 'available', b1: 'outside' });
   await expect(total(page)).toHaveText('Освоено 1 из 2');
-  await expect(sectionCount(page, 'alpha')).toHaveText('1 из 2');
+  await expect(await sectionCount(page, 'alpha')).toHaveText('1 из 2');
 
   // Следующая ступень включает предыдущую.
   await stage(page).selectOption({ label: 'Ступень 2' });
   await expectViews(page, { a1: 'mastered', a2: 'available', b1: 'ahead', 'exam-1': 'ahead' });
   await expect(total(page)).toHaveText('Освоено 1 из 4');
-  await expect(sectionCount(page, 'beta')).toHaveText('0 из 2');
+  await expect(await sectionCount(page, 'beta')).toHaveText('0 из 1');
+  await expect(await sectionCount(page, 'gamma')).toHaveText('0 из 1');
 
   // Снятие отметки тоже обновляет всё сразу.
-  await node(page, 'a1').click();
+  await (await node(page, 'a1')).click();
   await masteredBox(page).uncheck();
   await expectViews(page, { a1: 'available', a2: 'ahead' });
   await expect(total(page)).toHaveText('Освоено 0 из 4');

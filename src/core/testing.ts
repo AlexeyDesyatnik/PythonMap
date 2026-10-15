@@ -1,5 +1,5 @@
 // Сборка маленьких карт прямо в тестах.
-import type { LearningMap, MapNode } from './map';
+import type { LearningMap, MapNode } from './map.ts';
 
 type Prerequisites = Record<string, string[]>;
 
@@ -12,6 +12,8 @@ interface TestMapSpec {
   goals?: Record<string, string[][]>;
   /** Узлы без контрольной задачи; у остальных она есть. */
   withoutCheckTasks?: string[];
+  /** Узлы-задания ЕГЭ; остальные — темы. */
+  egeTasks?: string[];
 }
 
 export function testMap(spec: TestMapSpec): LearningMap {
@@ -20,9 +22,11 @@ export function testMap(spec: TestMapSpec): LearningMap {
   const sections = Object.entries(sectionSpecs).map(([sectionId, sectionNodes]) => {
     const ids = Object.keys(sectionNodes);
     for (const id of ids) {
+      const egeTask = spec.egeTasks?.includes(id);
       nodes.push({
         id,
-        kind: 'topic',
+        kind: egeTask ? 'ege-task' : 'topic',
+        ...(egeTask && { egeNumber: String(spec.egeTasks!.indexOf(id) + 1) }),
         title: `Узел ${id}`,
         description: '',
         prerequisites: sectionNodes[id],

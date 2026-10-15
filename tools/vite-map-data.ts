@@ -1,8 +1,11 @@
-// Подключает данные карты к сайту как модуль `virtual:map-data`.
+// Подключает данные карты к сайту как модуль `virtual:map-data`: сырые данные
+// файлов и раскладку карты, посчитанную здесь же, при сборке.
 // Каталог берётся из переменной окружения MAP_DATA_DIR (так тесты сайта
 // подставляют свою учебную карту), иначе — настоящие данные.
 import { resolve } from 'node:path';
 import type { Plugin } from 'vite';
+import { buildMap } from '../src/core/index.ts';
+import { mapLayout } from '../src/layout/index.ts';
 import { DEFAULT_MAP_DIR, listMapFiles, readMapFiles } from './map-files.ts';
 
 const ID = 'virtual:map-data';
@@ -18,7 +21,8 @@ export function mapData(): Plugin {
     load(id) {
       if (id !== RESOLVED_ID) return;
       for (const file of listMapFiles(dir)) this.addWatchFile(file);
-      return `export default ${JSON.stringify(readMapFiles(dir))};`;
+      const data = readMapFiles(dir);
+      return `export default ${JSON.stringify({ data, layout: mapLayout(buildMap(data)) })};`;
     },
     configureServer(server) {
       // Новый или удалённый файл раздела тоже должен обновить страницу.

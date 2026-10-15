@@ -1,7 +1,7 @@
 // Отметки освоенных узлов. Прогресс всегда замкнут вниз: вместе с узлом
 // освоены все его пререквизиты (ADR 0002).
-import type { LearningMap } from './map';
-import { withPrerequisites, withReliantNodes } from './stages';
+import type { LearningMap } from './map.ts';
+import { withPrerequisites, withReliantNodes } from './stages.ts';
 
 /** Прогресс — множество идентификаторов освоенных узлов. */
 export type Progress = ReadonlySet<string>;

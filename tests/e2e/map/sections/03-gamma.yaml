@@ -1,0 +1,9 @@
+id: gamma
+title: Раздел Задания
+nodes:
+  - id: exam-1
+    kind: ege-task
+    egeNumber: 7
+    title: Учебное задание
+    description: Задание экзамена.
+    prerequisites: [b1]

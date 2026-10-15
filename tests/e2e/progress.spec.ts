@@ -1,18 +1,18 @@
 import { expect, test, type Page } from '@playwright/test';
+import { node } from './helpers';
 
-const node = (page: Page, id: string) => page.locator(`[data-node="${id}"]`);
 const panel = (page: Page) => page.getByRole('region', { name: 'Узел' });
 const masteredBox = (page: Page) => panel(page).getByRole('checkbox', { name: 'Освоен' });
 
 async function expectMastered(page: Page, mastered: string[], notMastered: string[]) {
-  for (const id of mastered) await expect(node(page, id)).toHaveAttribute('data-mastered', 'true');
-  for (const id of notMastered) await expect(node(page, id)).toHaveAttribute('data-mastered', 'false');
+  for (const id of mastered) await expect(await node(page, id)).toHaveAttribute('data-mastered', 'true');
+  for (const id of notMastered) await expect(await node(page, id)).toHaveAttribute('data-mastered', 'false');
 }
 
 test('отметка узла отмечает его пререквизиты и сохраняется после перезагрузки', async ({ page }) => {
   await page.goto('/');
 
-  await node(page, 'a2').click();
+  await (await node(page, 'a2')).click();
   await expect(panel(page)).toContainText('Тема А2');
   await expect(masteredBox(page)).not.toBeChecked();
 
@@ -26,11 +26,11 @@ test('отметка узла отмечает его пререквизиты �
 test('перед снятием отметки предупреждает об опирающихся узлах; от снятия можно отказаться', async ({ page }) => {
   await page.goto('/');
   // Отметить можно любой узел: задание отмечается сразу, без своих пререквизитов.
-  await node(page, 'exam-1').click();
+  await (await node(page, 'exam-1')).click();
   await masteredBox(page).check();
   await expectMastered(page, ['a1', 'a2', 'b1', 'exam-1'], []);
 
-  await node(page, 'a2').click();
+  await (await node(page, 'a2')).click();
   // Флажок не снимается сразу: сначала ученик отвечает на предупреждение.
   await masteredBox(page).click();
   const warning = page.getByRole('alertdialog');
@@ -53,7 +53,7 @@ test('перед снятием отметки предупреждает об �
 
 test('отметка без опирающихся освоенных узлов снимается без предупреждения', async ({ page }) => {
   await page.goto('/');
-  await node(page, 'a2').click();
+  await (await node(page, 'a2')).click();
   await masteredBox(page).check();
 
   await masteredBox(page).uncheck();

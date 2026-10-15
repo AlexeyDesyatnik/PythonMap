@@ -1,4 +1,4 @@
-import type { LearningMap } from './map';
+import type { LearningMap } from './map.ts';
 
 /**
  * Состав ступени: целевые узлы этой и всех предыдущих ступеней той же цели

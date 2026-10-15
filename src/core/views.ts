@@ -1,7 +1,7 @@
 // Выбранная ступень и то, как ученик при ней видит карту: виды узлов и счёт.
-import type { LearningMap } from './map';
-import type { Progress } from './progress';
-import { stageNodes } from './stages';
+import type { LearningMap } from './map.ts';
+import type { Progress } from './progress.ts';
+import { stageNodes } from './stages.ts';
 
 /** Выбранная учеником ступень; `null` — ступень не выбрана. */
 export type StageChoice = { goalId: string; stageId: string } | null;

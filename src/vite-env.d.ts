@@ -1,5 +1,6 @@
 declare module 'virtual:map-data' {
   import type { RawMapData } from './core';
-  const data: RawMapData;
-  export default data;
+  import type { MapLayout } from './layout';
+  const mapData: { data: RawMapData; layout: MapLayout };
+  export default mapData;
 }

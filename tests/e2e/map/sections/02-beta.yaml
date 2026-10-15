@@ -6,9 +6,3 @@ nodes:
     title: Тема Б1
     description: Тема, опирающаяся на обе темы Альфы.
     prerequisites: [a1, a2]
-  - id: exam-1
-    kind: ege-task
-    egeNumber: 7
-    title: Учебное задание
-    description: Задание экзамена.
-    prerequisites: [b1]

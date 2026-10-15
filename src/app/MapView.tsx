@@ -1,8 +1,9 @@
 import type { KeyboardEvent } from 'react';
-import type { LearningMap, MapNode, NodeView, SectionCount } from '../core';
+import type { LearningMap, MapNode, NodeView, Section, SectionCount } from '../core';
 import type { Box, Edge, MapLayout, SectionLayout } from '../layout';
 import { nodeLabel, plural, VIEW_TITLES, wrap } from './labels';
 import { PanZoom } from './PanZoom';
+import { usePhone } from './usePhone';
 
 interface Props {
   map: LearningMap;
@@ -19,9 +20,16 @@ interface Props {
   onSelect: (id: string) => void;
 }
 
-/** Карта в два уровня: обзор разделов и граф открытого раздела. */
+/** На телефоне граф раздела не мельчает сильнее этого, а прокручивается вбок в своей рамке. */
+const READABLE_ON_PHONE = 0.75;
+
+/**
+ * Карта в два уровня: обзор разделов и граф открытого раздела. На телефоне
+ * вместо обзора — список разделов.
+ */
 export function MapView(props: Props) {
   const { map, layout, sectionId, onOpenSection, selectedId } = props;
+  const phone = usePhone();
   const section = map.sections.find((s) => s.id === sectionId);
   const sectionLayout = section ? layout.sections[section.id] : null;
   const focus = sectionLayout?.nodes.find((n) => n.id === selectedId) ?? null;
@@ -51,9 +59,12 @@ export function MapView(props: Props) {
           contentKey={section.id}
           focus={focus}
           label={`Раздел «${section.title}»`}
+          readableScale={phone ? READABLE_ON_PHONE : undefined}
         >
           <SectionGraph {...props} sectionLayout={sectionLayout} />
         </PanZoom>
+      ) : phone ? (
+        <SectionList {...props} />
       ) : (
         <PanZoom
           width={layout.overview.width}
@@ -69,14 +80,64 @@ export function MapView(props: Props) {
   );
 }
 
+/** Сколько шагов маршрута в каждом разделе и в каком разделе следующий шаг. */
+function routeBySection(map: LearningMap, route: string[]) {
+  const sectionOf = new Map(map.nodes.map((n) => [n.id, n.sectionId]));
+  const steps = new Map<string, number>();
+  for (const id of route) steps.set(sectionOf.get(id)!, (steps.get(sectionOf.get(id)!) ?? 0) + 1);
+  return { steps, next: route.length > 0 ? sectionOf.get(route[0]) : undefined };
+}
+
+/** Размер раздела: «2 темы» или, у раздела заданий ЕГЭ, «3 задания». */
+function sectionSize(layout: MapLayout, section: Section): string {
+  const tasks = layout.sections[section.id].kind === 'rows';
+  return plural(section.nodeIds.length, tasks ? ['задание', 'задания', 'заданий'] : ['тема', 'темы', 'тем']);
+}
+
+/** Обзор на телефоне: разделы списком в порядке карты — от основ к заданиям ЕГЭ. */
+function SectionList({ map, layout, route, sectionCounts, onOpenSection }: Props) {
+  const counts = new Map(sectionCounts.map((c) => [c.sectionId, c]));
+  const { steps: routeSteps, next: nextSection } = routeBySection(map, route);
+  return (
+    <ul className="section-list" aria-label="Разделы карты">
+      {map.sections.map((section) => {
+        const count = counts.get(section.id);
+        const steps = routeSteps.get(section.id);
+        return (
+          <li key={section.id}>
+            <button
+              type="button"
+              className={`section-item${steps ? ' on-route' : ''}`}
+              data-section={section.id}
+              data-route-steps={steps}
+              onClick={() => onOpenSection(section.id)}
+            >
+              <span className="section-item-title">{section.title}</span>
+              <span className="section-item-facts">
+                <span>{sectionSize(layout, section)}</span>
+                {count && (
+                  <span data-section-count={section.id}>
+                    освоено {count.mastered} из {count.total}
+                  </span>
+                )}
+                {steps && (
+                  <span className={`section-item-route${section.id === nextSection ? ' next' : ''}`}>
+                    {plural(steps, ['шаг', 'шага', 'шагов'])} маршрута
+                  </span>
+                )}
+              </span>
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 function Overview({ map, layout, route, sectionCounts, onOpenSection }: Props) {
   const sections = new Map(map.sections.map((s) => [s.id, s]));
   const counts = new Map(sectionCounts.map((c) => [c.sectionId, c]));
-  const sectionOf = new Map(map.nodes.map((n) => [n.id, n.sectionId]));
-  // Сколько шагов маршрута в каждом разделе и где следующий шаг.
-  const routeSteps = new Map<string, number>();
-  for (const id of route) routeSteps.set(sectionOf.get(id)!, (routeSteps.get(sectionOf.get(id)!) ?? 0) + 1);
-  const nextSection = route.length > 0 ? sectionOf.get(route[0]) : undefined;
+  const { steps: routeSteps, next: nextSection } = routeBySection(map, route);
 
   return (
     <>
@@ -85,8 +146,7 @@ function Overview({ map, layout, route, sectionCounts, onOpenSection }: Props) {
         const section = sections.get(box.id)!;
         const count = counts.get(box.id);
         const steps = routeSteps.get(box.id);
-        const tasks = layout.sections[box.id].kind === 'rows';
-        const size = plural(section.nodeIds.length, tasks ? ['задание', 'задания', 'заданий'] : ['тема', 'темы', 'тем']);
+        const size = sectionSize(layout, section);
         const lines = wrap(section.title, 21);
         const label = [
           section.title,

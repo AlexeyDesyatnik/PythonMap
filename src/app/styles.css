@@ -678,23 +678,121 @@ body {
   color: var(--route);
 }
 
+/* Список разделов — обзор на телефоне. */
+.section-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+}
+
+.section-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--section-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.section-item.on-route {
+  border-color: var(--route);
+}
+
+.section-item-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.section-item-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.section-item-route {
+  color: var(--route);
+  font-weight: 600;
+}
+
+/* Телефон: страница прокручивается сверху вниз — маршрут, разделы или граф
+   раздела, описания тем. Граф живёт в своей рамке, панель узла всплывает снизу. */
 @media (max-width: 700px) {
+  .app {
+    height: auto;
+    min-height: 100vh;
+    padding: 12px;
+  }
+
+  .app-title {
+    font-size: 18px;
+  }
+
+  .stage-picker,
+  .stage-picker label,
+  .stage-picker select {
+    min-width: 0;
+    max-width: 100%;
+  }
+
   .app-body {
     flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
   }
 
   .route-panel {
     width: 100%;
-    max-height: 40vh;
-    flex: none;
-  }
-
-  .side-panels {
-    order: -1;
-    width: 100%;
+    max-height: 45vh;
   }
 
   .map-area {
-    min-height: 60vh;
+    flex: none;
+  }
+
+  .map-viewport {
+    flex: none;
+    height: 65vh;
+  }
+
+  /* Вертикальный жест над графом прокручивает страницу, граф двигается вбок. */
+  .map-canvas {
+    touch-action: pan-y;
+  }
+
+  .side-panels {
+    width: 100%;
+  }
+
+  .section-topics {
+    flex: none;
+    overflow: visible;
+  }
+
+  .node-panel {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    max-height: 50vh;
+    overflow-y: auto;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -6px 24px rgb(0 0 0 / 20%);
+  }
+
+  /* Панель узла не должна закрывать конец страницы. */
+  .app:has(.node-panel) {
+    padding-bottom: 50vh;
   }
 }

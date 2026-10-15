@@ -10,6 +10,12 @@ interface Props {
   /** Блок, который должен быть виден (например, открытый из маршрута узел). */
   focus: Box | null;
   label: string;
+  /**
+   * Наименьший масштаб, при котором подписи ещё читаются. Новое содержимое
+   * не уменьшается сильнее, а прокручивается вбок; кнопка «Показать целиком»
+   * всё равно показывает его целиком.
+   */
+  readableScale?: number;
   children: ReactNode;
 }
 
@@ -28,7 +34,7 @@ const DRAG_THRESHOLD = 4;
 const clampK = (k: number) => Math.min(MAX_K, Math.max(MIN_K, k));
 
 /** SVG, который можно перетаскивать мышью или пальцем и масштабировать колесом и кнопками. */
-export function PanZoom({ width, height, contentKey, focus, label, children }: Props) {
+export function PanZoom({ width, height, contentKey, focus, label, readableScale = MIN_K, children }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [view, setView] = useState<View>({ x: 0, y: 0, k: 1 });
@@ -47,8 +53,8 @@ export function PanZoom({ width, height, contentKey, focus, label, children }: P
     return () => observer.disconnect();
   }, []);
 
-  const fitted = (): View => {
-    const k = clampK(Math.min(1, (size.w - 2 * PAD) / width, (size.h - 2 * PAD) / height));
+  const fitted = (minK = MIN_K): View => {
+    const k = clampK(Math.max(minK, Math.min(1, (size.w - 2 * PAD) / width, (size.h - 2 * PAD) / height)));
     return { k, x: (size.w - width * k) / 2, y: Math.max(PAD, (size.h - height * k) / 2) };
   };
 
@@ -59,7 +65,7 @@ export function PanZoom({ width, height, contentKey, focus, label, children }: P
     if (fittedKey.current !== contentKey || !touched.current) {
       fittedKey.current = contentKey;
       touched.current = false;
-      next = fitted();
+      next = fitted(readableScale);
     }
     if (focus) {
       const left = next.x + focus.x * next.k;

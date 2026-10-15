@@ -1,0 +1,32 @@
+id: sequences
+title: Обработка последовательностей
+nodes:
+  - id: for-range
+    kind: topic
+    title: Цикл for
+    description: for повторяет действия для каждого числа из range — с заданными началом, концом и шагом. Нужен, когда заранее известно, сколько раз повторять.
+    prerequisites: [input-output]
+
+  - id: sequence-processing
+    kind: topic
+    title: Сумма, количество и максимум
+    description: Переменные-накопители собирают в цикле сумму, количество, наибольшее и наименьшее значение. Основа почти всех задач на последовательность чисел.
+    prerequisites: [for-range, conditions]
+
+  - id: nested-loops
+    kind: topic
+    title: Вложенные циклы
+    description: Цикл внутри цикла перебирает все пары, тройки и таблицы значений. На вложенных циклах держится решение задач перебором.
+    prerequisites: [for-range]
+
+  - id: while-loop
+    kind: topic
+    title: Цикл while
+    description: while повторяет действия, пока условие истинно, break досрочно завершает цикл, continue переходит к следующему повторению. Нужен, когда число повторений заранее неизвестно.
+    prerequisites: [conditions]
+
+  - id: digits-of-number
+    kind: topic
+    title: Цифры числа
+    description: Разбор числа на цифры делением и остатком в цикле while. Встречается и в олимпиадных задачах, и в заданиях ЕГЭ.
+    prerequisites: [while-loop, arithmetic]

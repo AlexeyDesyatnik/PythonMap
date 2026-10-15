@@ -6,30 +6,15 @@ goals:
       - id: ege-python-basics
         title: Основы Python
         targets: &python-basics
-          - print-args
-          - f-strings
-          - math-module
-          - elif
-          - logical-ops
-          - loop-accumulate
-          - loop-min-max
-          - break-continue
+          - sequence-processing
           - digits-of-number
-          - string-slices
-          - string-loop
-          - ord-chr
-          - number-systems
-          - list-functions
-          - list-slices
-          - list-comprehension
-          - tuples
+          - files
           - matrix
           - sets
-          - dict-counting
-          - scope
+          - dicts
           - lambda-key
           - recursion
-          - file-numbers
+          - scope
       - id: ege-basic
         title: Базовые задания
         targets: [ege-truth-table, ege-number-algorithm, ege-turtle, ege-words, ege-table-rows, ege-subnet-mask]
@@ -39,6 +24,7 @@ goals:
       - id: ege-advanced
         title: Задания высокого уровня
         targets: [ege-string-processing, ege-number-search, ege-sorting-processing, ege-data-analysis]
+
   - id: olympiad
     title: Олимпиады
     stages:
@@ -47,10 +33,10 @@ goals:
         targets: *python-basics
       - id: olympiad-school
         title: Школьный этап
-        targets: [itertools-enumeration, primes, gcd, base-conversion, simple-sorts, greedy, prefix-sums]
+        targets: [itertools-enumeration, divisors-primes, gcd, number-systems, simple-sorts, greedy, prefix-sums]
       - id: olympiad-municipal
         title: Муниципальный этап
-        targets: [sieve, two-pointers, binary-search, counting-sort, merge-sort, stack, queue, dp-1d, dp-memo]
+        targets: [sieve, two-pointers, binary-search, efficient-sorts, stack, queue, backtracking, dp-1d, dp-memo]
       - id: olympiad-regional
         title: Региональный этап
         targets:
@@ -58,14 +44,12 @@ goals:
           - binary-search-answer
           - prefix-sums-2d
           - heap
-          - connected-components
+          - monotonic-stack
+          - segment-tree
           - grid-bfs
           - dijkstra
+          - dag
           - mst
-          - segment-tree
-          - topological-sort
           - dp-2d
-          - dp-answer-restore
-          - lis
-          - lcs
+          - subsequences
           - knapsack

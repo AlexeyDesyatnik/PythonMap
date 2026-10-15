@@ -8,6 +8,7 @@ export type IssueCode =
   | 'missing-prerequisite'
   | 'missing-target'
   | 'cycle'
+  | 'section-cycle'
   | 'redundant-prerequisite'
   | 'outside-stages'
   | 'no-check-task';
@@ -72,6 +73,34 @@ export function validateMap(map: LearningMap): Issue[] {
     error('cycle', `Цикл в пререквизитах: ${[...cycle, cycle[0]].map(label).join(' → ')}`, cycle);
   }
 
+  // Петли между разделами: обзор карты читается снизу вверх, от основ к вершине (ADR 0003).
+  if (cycles.length === 0) {
+    const links = new Map<string, [string, string]>();
+    const sectionDeps = new Map(map.sections.map((s) => [s.id, { prerequisites: [] as string[] }]));
+    for (const node of byId.values()) {
+      for (const p of node.prerequisites) {
+        const from = byId.get(p)?.sectionId;
+        if (!from || from === node.sectionId || !sectionDeps.has(node.sectionId)) continue;
+        const key = `${from}->${node.sectionId}`;
+        if (!links.has(key)) {
+          links.set(key, [p, node.id]);
+          sectionDeps.get(node.sectionId)!.prerequisites.push(from);
+        }
+      }
+    }
+    const sectionLabel = (id: string) => `«${map.sections.find((s) => s.id === id)?.title ?? id}»`;
+    for (const loop of findCycles(sectionDeps)) {
+      // Каждый следующий раздел опирается на предыдущий, первый — на последний.
+      const steps = loop.map((from, i) => links.get(`${from}->${loop[(i + 1) % loop.length]}`)!);
+      error(
+        'section-cycle',
+        `Разделы опираются друг на друга по кругу: ${[...loop, loop[0]].map(sectionLabel).join(' → ')}; ` +
+          `связи: ${steps.map(([a, b]) => `${label(a)} → ${label(b)}`).join(', ')}`,
+        steps.flat(),
+      );
+    }
+  }
+
   // Лишние связи: A — пререквизит B, но A и так следует из другого пререквизита B.
   // Пока в карте есть цикл, цепочки ходят по кругу, и искать их бессмысленно.
   for (const node of cycles.length > 0 ? [] : map.nodes) {
@@ -117,7 +146,7 @@ export function validateMap(map: LearningMap): Issue[] {
  * Циклы в пререквизитах, каждый — один раз. Узлы цикла идут по стрелкам:
  * каждый следующий опирается на предыдущий, а первый — на последний.
  */
-function findCycles(byId: Map<string, MapNode>): string[][] {
+function findCycles(byId: Map<string, { prerequisites: string[] }>): string[][] {
   const state = new Map<string, 'active' | 'done'>();
   const stack: string[] = [];
   const cycles: string[][] = [];

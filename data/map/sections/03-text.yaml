@@ -1,0 +1,26 @@
+id: text
+title: Обработка текста
+nodes:
+  - id: strings
+    kind: topic
+    title: Строки
+    description: Длина строки, сложение, проверка вхождения через in, обращение к символу по индексу и срезы. С этого начинается обработка текста.
+    prerequisites: [input-output]
+
+  - id: string-processing
+    kind: topic
+    title: Обработка строк
+    description: Перебор символов в цикле, методы строк — замена, подсчёт, поиск, смена регистра — и коды символов ord и chr. Решают типовые задачи с текстом.
+    prerequisites: [strings, for-range]
+
+  - id: split-input
+    kind: topic
+    title: Ввод чисел одной строкой
+    description: split разбивает строку на части, map с int превращает их в числа, join собирает список обратно в строку. Так читают и выводят данные, записанные в одну строку.
+    prerequisites: [lists, strings]
+
+  - id: files
+    kind: topic
+    title: Чтение данных из файла
+    description: open и with открывают файл; данные читаются целиком, построчно или как числа через пробел. Так начинаются задачи с большими файлами данных.
+    prerequisites: [string-processing, split-input]

@@ -1,0 +1,44 @@
+id: enumeration-numbers
+title: Перебор и теория чисел
+nodes:
+  - id: itertools-enumeration
+    kind: topic
+    title: Перебор комбинаций — itertools
+    description: product, permutations и combinations перебирают все наборы, перестановки и сочетания. Заменяют глубокую вложенность циклов при полном переборе.
+    prerequisites: [lists]
+
+  - id: bool-expressions
+    kind: topic
+    title: Логические выражения
+    description: Условие — это значение True или False, его можно сохранить и вычислить для всех наборов переменных. Импликацию записывают через <=, равносильность — через ==.
+    prerequisites: [conditions]
+
+  - id: divisors-primes
+    kind: topic
+    title: Делители и простые числа
+    description: Поиск делителей перебором до квадратного корня и проверка числа на простоту. Основа задач на делимость.
+    prerequisites: [for-range, arithmetic]
+
+  - id: gcd
+    kind: topic
+    title: НОД и алгоритм Евклида
+    description: Наибольший общий делитель быстро находится алгоритмом Евклида или функцией math.gcd. Через него же считают наименьшее общее кратное.
+    prerequisites: [while-loop, arithmetic]
+
+  - id: number-systems
+    kind: topic
+    title: Системы счисления
+    description: Перевод чисел функциями bin, hex и int с основанием и вручную через остатки от деления, а также поразрядные операции &, | и сдвиги. Нужны для задач о записи чисел и двоичных масках.
+    prerequisites: [strings, digits-of-number]
+
+  - id: sieve
+    kind: topic
+    title: Решето Эратосфена
+    description: Находит все простые числа до N сразу, вычёркивая кратные. Гораздо быстрее, чем проверять каждое число отдельно.
+    prerequisites: [divisors-primes, lists]
+
+  - id: modular-arithmetic
+    kind: topic
+    title: Арифметика по модулю
+    description: Сложение, умножение и возведение в степень по модулю, в том числе pow с тремя аргументами. Нужна, когда ответ огромен и его требуют вывести по модулю.
+    prerequisites: [arithmetic]

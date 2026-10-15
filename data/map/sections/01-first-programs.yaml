@@ -1,0 +1,31 @@
+id: first-programs
+title: Первые программы
+nodes:
+  - id: first-program
+    kind: topic
+    title: Первая программа
+    description: Программа из одной строки, которая печатает текст с помощью print. С неё начинается работа с Python — запуск программы и чтение её вывода.
+
+  - id: variables
+    kind: topic
+    title: Переменные
+    description: Переменная хранит значение под именем, присваивание меняет его. На переменных держится любая программа сложнее одной строки.
+    prerequisites: [first-program]
+
+  - id: input-output
+    kind: topic
+    title: Ввод и вывод
+    description: input читает строку, int и float превращают её в число, print с параметрами sep и end и f-строки выводят ответ в нужном виде. Без этого программа не решает задачу для разных данных.
+    prerequisites: [variables]
+
+  - id: arithmetic
+    kind: topic
+    title: Арифметика
+    description: Действия с целыми и дробными числами, целочисленное деление // и остаток %, округление и модуль math. Через деление и остаток проверяют делимость и работают с цифрами.
+    prerequisites: [variables]
+
+  - id: conditions
+    kind: topic
+    title: Условия
+    description: Сравнения, if с ветками elif и else и логические операции and, or, not. Так программа по-разному отвечает на разные входные данные.
+    prerequisites: [input-output]

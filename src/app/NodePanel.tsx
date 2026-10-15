@@ -8,7 +8,8 @@ interface Props {
   progress: Progress;
   onMark: () => void;
   onUnmark: () => void;
-  onClose: () => void;
+  /** Без него крестика нет: на телефоне панель убирается сама. */
+  onClose?: () => void;
 }
 
 /** Панель узла. Пока в ней название и отметка; остальное содержимое — отдельная задача. */
@@ -26,9 +27,11 @@ export function NodePanel({ map, node, progress, onMark, onUnmark, onClose }: Pr
 
   return (
     <aside className="node-panel" role="region" aria-label="Узел">
-      <button type="button" className="node-panel-close" aria-label="Закрыть" onClick={onClose}>
-        ×
-      </button>
+      {onClose && (
+        <button type="button" className="node-panel-close" aria-label="Закрыть" onClick={onClose}>
+          ×
+        </button>
+      )}
       <h2 className="node-panel-title">{nodeLabel(node)}</h2>
       <label className="node-panel-mark">
         <input type="checkbox" checked={mastered} onChange={toggle} />

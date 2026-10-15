@@ -58,10 +58,22 @@ test('на телефоне раздел открывается из списк�
   await a1.tap();
   await expect(nodePanel(page)).toContainText('Тема А1');
   await expect(nodePanel(page)).toBeInViewport();
+  // Закрывать панель крестиком на телефоне не нужно: она закрывается сама.
+  await expect(nodePanel(page).getByRole('button', { name: 'Закрыть' })).toHaveCount(0);
   await nodePanel(page).getByRole('checkbox', { name: 'Освоен' }).tap();
   await expect(a1).toHaveAttribute('data-mastered', 'true');
   await expect(page.getByTestId('progress-total')).toHaveText('Освоено 1 из 4');
+  // После отметки панель сразу убирается и не закрывает карту.
+  await expect(nodePanel(page)).toHaveCount(0);
   await expectNoHorizontalScroll(page);
+
+  // Снятие отметки тоже сразу убирает панель.
+  await a1.tap();
+  await nodePanel(page).getByRole('checkbox', { name: 'Освоен' }).tap();
+  await expect(a1).toHaveAttribute('data-mastered', 'false');
+  await expect(nodePanel(page)).toHaveCount(0);
+  await a1.tap();
+  await nodePanel(page).getByRole('checkbox', { name: 'Освоен' }).tap();
 
   // Назад к списку разделов: счёт в нём обновился.
   await page.getByRole('button', { name: '← Обзор' }).tap();
@@ -77,4 +89,15 @@ test('на телефоне шаг маршрута открывает узел 
   await expect(nodePanel(page)).toBeInViewport();
   await expect(page.getByTestId('map-heading')).toHaveText('Раздел Бета');
   await expectNoHorizontalScroll(page);
+
+  // Переход в другой раздел убирает панель узла.
+  await page.locator('[data-block="alpha"]').tap();
+  await expect(page.getByTestId('map-heading')).toHaveText('Раздел Альфа');
+  await expect(nodePanel(page)).toHaveCount(0);
+
+  // И возврат к обзору тоже.
+  await page.locator('[data-node="a1"]').tap();
+  await expect(nodePanel(page)).toContainText('Тема А1');
+  await page.getByRole('button', { name: '← Обзор' }).tap();
+  await expect(nodePanel(page)).toHaveCount(0);
 });

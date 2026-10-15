@@ -6,8 +6,6 @@
   --section-border: #d8dbe0;
   --node-bg: #eef3fb;
   --node-border: #8aa4cc;
-  --ege-bg: #fbf1e6;
-  --ege-border: #d39a5c;
   --edge: #9aa3ae;
   --mastered-bg: #dcf1e0;
   --mastered-border: #3f9a55;
@@ -28,8 +26,6 @@
     --section-border: #363b43;
     --node-bg: #23314a;
     --node-border: #5876a8;
-    --ege-bg: #3e2e1f;
-    --ege-border: #a8763f;
     --edge: #6c7480;
     --mastered-bg: #1e3b26;
     --mastered-border: #4fb469;
@@ -159,11 +155,6 @@ body {
 .node {
   fill: var(--node-bg);
   stroke: var(--node-border);
-}
-
-.node-ege-task {
-  fill: var(--ege-bg);
-  stroke: var(--ege-border);
 }
 
 .section-count {

@@ -4,3 +4,4 @@ export * from './stages';
 export * from './validate';
 export * from './progress';
 export * from './views';
+export * from './route';

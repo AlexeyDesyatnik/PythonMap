@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import type { LearningMap, NodeView, SectionCount } from '../core';
 import { simpleLayout } from '../layout/simple';
 import { nodeLabel, VIEW_TITLES } from './labels';
@@ -6,21 +6,33 @@ import { nodeLabel, VIEW_TITLES } from './labels';
 interface Props {
   map: LearningMap;
   views: ReadonlyMap<string, NodeView>;
+  /** Маршрут до выбранной ступени; его узлы выделены номерами шагов. */
+  route: string[];
   /** Счёт по разделам; раздела без узлов ступени здесь нет. */
   sectionCounts: SectionCount[];
   selectedId: string | null;
   onSelect: (id: string) => void;
 }
 
-export function MapView({ map, views, sectionCounts, selectedId, onSelect }: Props) {
+export function MapView({ map, views, route, sectionCounts, selectedId, onSelect }: Props) {
   const layout = useMemo(() => simpleLayout(map), [map]);
   const nodes = new Map(map.nodes.map((n) => [n.id, n]));
   const sections = new Map(map.sections.map((s) => [s.id, s]));
   const counts = new Map(sectionCounts.map((c) => [c.sectionId, c]));
+  const steps = new Map(route.map((id, i) => [id, i + 1]));
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  // Открытый узел (например, из маршрута) может быть за краем окна — прокручиваем к нему.
+  useEffect(() => {
+    if (!selectedId) return;
+    const el = svgRef.current?.querySelector(`[data-node="${CSS.escape(selectedId)}"]`);
+    el?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+  }, [selectedId]);
 
   return (
     <div className="map-scroll">
       <svg
+        ref={svgRef}
         className="map"
         role="img"
         aria-label="Карта"
@@ -67,6 +79,7 @@ export function MapView({ map, views, sectionCounts, selectedId, onSelect }: Pro
           const lines = wrap(label, 24);
           const view = views.get(node.id)!;
           const mastered = view === 'mastered';
+          const step = steps.get(node.id);
           const lineH = 16;
           const top = box.y + box.height / 2 - ((lines.length - 1) * lineH) / 2;
           return (
@@ -76,10 +89,11 @@ export function MapView({ map, views, sectionCounts, selectedId, onSelect }: Pro
               data-section-of={node.sectionId}
               data-mastered={mastered}
               data-view={view}
-              className={`node-group view-${view}`}
+              data-route-step={step}
+              className={`node-group view-${view}${step ? ' on-route' : ''}`}
               role="button"
               tabIndex={0}
-              aria-label={`${label}, ${VIEW_TITLES[view]}`}
+              aria-label={`${label}, ${VIEW_TITLES[view]}${step ? `, № ${step} в маршруте` : ''}`}
               aria-pressed={node.id === selectedId}
               onClick={() => onSelect(node.id)}
               onKeyDown={(e) => {
@@ -104,6 +118,14 @@ export function MapView({ map, views, sectionCounts, selectedId, onSelect }: Pro
                   </tspan>
                 ))}
               </text>
+              {step && (
+                <g className={`route-badge${step === 1 ? ' route-badge-next' : ''}`} aria-hidden>
+                  <circle cx={box.x + box.width} cy={box.y} r={11} />
+                  <text x={box.x + box.width} y={box.y} textAnchor="middle" dominantBaseline="central">
+                    {step}
+                  </text>
+                </g>
+              )}
               {mastered && (
                 <text className="node-check" x={box.x + box.width - 14} y={box.y + 15} textAnchor="middle" aria-hidden>
                   ✓

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { markMastered, nodeViews, progressCount, unmarkMastered, type LearningMap } from '../core';
+import { markMastered, nodeViews, progressCount, route, unmarkMastered, type LearningMap } from '../core';
 import { MapView } from './MapView';
 import { NodePanel } from './NodePanel';
+import { RoutePanel } from './RoutePanel';
 import { StagePicker } from './StagePicker';
 import { VIEW_TITLES } from './labels';
 import { loadProgress, loadStage, saveProgress, saveStage } from './storage';
@@ -13,6 +14,7 @@ export function App({ map }: { map: LearningMap }) {
   const selected = map.nodes.find((n) => n.id === selectedId);
   const views = useMemo(() => nodeViews(map, progress, stage), [map, progress, stage]);
   const counts = useMemo(() => progressCount(map, progress, stage), [map, progress, stage]);
+  const routeIds = useMemo(() => (stage ? route(map, progress, stage) : null), [map, progress, stage]);
 
   // Сохраняем и прогресс, приведённый к инварианту при загрузке.
   useEffect(() => saveProgress(progress), [progress]);
@@ -35,9 +37,11 @@ export function App({ map }: { map: LearningMap }) {
         </ul>
       </header>
       <div className="app-body">
+        <RoutePanel map={map} stage={stage} route={routeIds} selectedId={selectedId} onSelect={setSelectedId} />
         <MapView
           map={map}
           views={views}
+          route={routeIds ?? []}
           sectionCounts={counts.sections}
           selectedId={selectedId}
           onSelect={setSelectedId}

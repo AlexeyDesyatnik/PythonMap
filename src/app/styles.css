@@ -12,6 +12,7 @@
   --selected: #1f6feb;
   --panel-bg: #ffffff;
   --danger: #c4372f;
+  --route: #8250df;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color: var(--text);
   background: var(--bg);
@@ -32,6 +33,7 @@
     --selected: #58a6ff;
     --panel-bg: #202328;
     --danger: #e5534b;
+    --route: #b48cf2;
   }
 }
 
@@ -335,9 +337,140 @@ body {
   color: #fff;
 }
 
+/* Маршрут на карте: номер шага в углу узла, следующий шаг — закрашен. */
+.route-badge circle {
+  fill: var(--panel-bg);
+  stroke: var(--route);
+  stroke-width: 1.5;
+}
+
+.route-badge text {
+  fill: var(--route);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.route-badge-next circle {
+  fill: var(--route);
+}
+
+.route-badge-next text {
+  fill: #fff;
+}
+
+.on-route .node {
+  stroke: var(--route);
+}
+
+.on-route .node-selected {
+  stroke: var(--selected);
+}
+
+.route-panel {
+  width: 250px;
+  flex: none;
+  align-self: stretch;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 14px 12px;
+  background: var(--panel-bg);
+  border: 1px solid var(--section-border);
+  border-radius: 10px;
+}
+
+.route-panel-title {
+  margin: 0 0 10px 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.route-panel-note {
+  margin: 0 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.route-reached {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.route-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.route-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 6px 4px;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  color: var(--text);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.route-item:hover {
+  background: var(--bg);
+}
+
+.route-item[aria-pressed='true'] {
+  border-color: var(--selected);
+}
+
+.route-step {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--route);
+  border-radius: 50%;
+  color: var(--route);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 19px;
+  text-align: center;
+}
+
+.route-item-text {
+  padding-top: 2px;
+}
+
+.route-next .route-item {
+  background: var(--bg);
+}
+
+.route-next .route-step {
+  background: var(--route);
+  color: #fff;
+}
+
+.route-next-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--route);
+}
+
 @media (max-width: 700px) {
   .app-body {
     flex-direction: column;
+  }
+
+  .route-panel {
+    width: 100%;
+    max-height: 40vh;
+    flex: none;
   }
 
   .node-panel {

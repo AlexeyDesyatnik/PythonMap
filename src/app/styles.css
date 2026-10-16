@@ -631,7 +631,8 @@ body {
   justify-content: flex-end;
 }
 
-.dialog-actions button {
+.dialog-actions button,
+.first-visit-marks button {
   padding: 6px 14px;
   font: inherit;
   border: 1px solid var(--section-border);
@@ -639,6 +640,59 @@ body {
   background: var(--bg);
   color: var(--text);
   cursor: pointer;
+}
+
+.dialog-actions .primary,
+.first-visit-marks .primary {
+  border-color: var(--route);
+  background: var(--route);
+  /* Цвет фона панели: светлый на тёмно-фиолетовом и тёмный на светло-фиолетовом. */
+  color: var(--panel-bg);
+}
+
+.dialog-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Первый визит: шаг 1 — окно поверх карты, шаг 2 — подсказка над картой. */
+.first-visit .stage-picker {
+  margin: 16px 0 20px;
+}
+
+.first-visit-step {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.dialog .first-visit-step {
+  margin: 0 0 4px;
+}
+
+.first-visit-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.first-visit-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--route);
+  border-radius: 8px;
+  background: var(--panel-bg);
+}
+
+.first-visit-marks p {
+  margin: 0;
+}
+
+.first-visit-marks button {
+  flex: none;
 }
 
 .dialog-actions .danger {

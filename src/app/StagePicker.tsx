@@ -9,10 +9,13 @@ interface Props {
 
 /**
  * Выбор цели и ступени внутри неё. Ступень ученик выбирает сам: после выбора
- * или смены цели ступень не выбрана.
+ * или смены цели ступень не выбрана. Если ступень выбрана, цель берётся из неё —
+ * так выбор, сделанный в другом месте (на шагах первого визита), виден и здесь.
  */
 export function StagePicker({ map, stage, onChange }: Props) {
-  const [goalId, setGoalId] = useState(stage?.goalId ?? '');
+  // Цель, выбранная, пока ступени ещё нет.
+  const [chosenGoalId, setChosenGoalId] = useState(stage?.goalId ?? '');
+  const goalId = stage?.goalId ?? chosenGoalId;
   const goal = map.goals.find((g) => g.id === goalId);
 
   return (
@@ -22,7 +25,7 @@ export function StagePicker({ map, stage, onChange }: Props) {
         <select
           value={goalId}
           onChange={(e) => {
-            setGoalId(e.target.value);
+            setChosenGoalId(e.target.value);
             onChange(null);
           }}
         >

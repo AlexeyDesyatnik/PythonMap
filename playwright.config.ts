@@ -4,7 +4,19 @@ const PORT = 5199;
 
 export default defineConfig({
   testDir: 'tests/e2e',
-  use: { baseURL: `http://localhost:${PORT}` },
+  use: {
+    baseURL: `http://localhost:${PORT}`,
+    // Обычно ученик уже прошёл первый визит; его шаги проверяются отдельно, на чистом браузере.
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: `http://localhost:${PORT}`,
+          localStorage: [{ name: 'python-map/first-visit-done', value: 'true' }],
+        },
+      ],
+    },
+  },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     // Сайт в тестах работает на собственной учебной карте, а не на настоящих данных,

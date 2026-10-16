@@ -1,18 +1,47 @@
 import { useEffect, useMemo, useState } from 'react';
-import { markMastered, nodeViews, progressCount, route, unmarkMastered, type LearningMap, type Progress } from '../core';
+import {
+  markMastered,
+  nodeViews,
+  progressCount,
+  route,
+  unmarkMastered,
+  type LearningMap,
+  type Progress,
+  type StageChoice,
+} from '../core';
 import type { MapLayout } from '../layout';
+import { MarksStep, StageStep, type FirstVisitStep } from './FirstVisit';
 import { MapView } from './MapView';
 import { NodePanel } from './NodePanel';
 import { RoutePanel } from './RoutePanel';
 import { SectionNodes } from './SectionNodes';
 import { StagePicker } from './StagePicker';
 import { VIEW_TITLES } from './labels';
-import { loadProgress, loadStage, saveProgress, saveStage } from './storage';
+import {
+  loadFirstVisitDone,
+  loadProgress,
+  loadStage,
+  saveFirstVisitDone,
+  saveProgress,
+  saveStage,
+} from './storage';
 import { usePhone } from './usePhone';
 
 export function App({ map, layout }: { map: LearningMap; layout: MapLayout }) {
   const [progress, setProgress] = useState<Progress>(() => loadProgress(map));
   const [stage, setStage] = useState(() => loadStage(map));
+  // Шаги первого визита; `null` — их уже прошли или пропустили.
+  const [firstVisit, setFirstVisit] = useState<FirstVisitStep | null>(() => (loadFirstVisitDone() ? null : 'stage'));
+  const finishFirstVisit = () => {
+    setFirstVisit(null);
+    saveFirstVisitDone();
+  };
+  // Если прогресс уже есть, отмечать с нуля нечего — шаг отметки не нужен.
+  const afterStageStep = (chosen: StageChoice | null) => {
+    if (chosen) setStage(chosen);
+    if (progress.size > 0) finishFirstVisit();
+    else setFirstVisit('marks');
+  };
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // Открытый раздел; `null` — обзор.
   const [sectionId, setSectionId] = useState<string | null>(null);
@@ -57,6 +86,7 @@ export function App({ map, layout }: { map: LearningMap; layout: MapLayout }) {
           ))}
         </ul>
       </header>
+      {firstVisit === 'marks' && <MarksStep marked={progress.size > 0} onDone={finishFirstVisit} />}
       <div className="app-body">
         <RoutePanel map={map} stage={stage} route={routeIds} selectedId={selectedId} onSelect={select} />
         <MapView
@@ -89,6 +119,9 @@ export function App({ map, layout }: { map: LearningMap; layout: MapLayout }) {
           </div>
         )}
       </div>
+      {firstVisit === 'stage' && (
+        <StageStep map={map} stage={stage} marksStepNext={progress.size === 0} onDone={afterStageStep} />
+      )}
     </main>
   );
 }

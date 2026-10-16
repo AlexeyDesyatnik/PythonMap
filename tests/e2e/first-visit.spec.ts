@@ -11,7 +11,7 @@ const masteredBox = (page: Page) =>
   page.getByRole('region', { name: 'Узел' }).getByRole('checkbox', { name: 'Освоен' });
 
 test('первый визит: выбор ступени и отметка на карте заканчиваются маршрутом', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   // Шаг 1: цель и ступень.
   await expect(steps(page)).toContainText('Шаг 1 из 2');
@@ -40,7 +40,7 @@ test('первый визит: выбор ступени и отметка на 
 });
 
 test('оба шага можно пропустить; пропущенные шаги тоже больше не показываются', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   // Выбор, не подтверждённый кнопкой «Дальше», не применяется.
   await steps(page).getByRole('combobox', { name: 'Цель' }).selectOption({ label: 'Экзамен' });
@@ -67,7 +67,7 @@ test('если в браузере уже есть прогресс, шага о
       sessionStorage.setItem('seeded', '1');
     }
   });
-  await page.goto('/');
+  await page.goto('./');
 
   // Второго шага не будет — и «1 из 2» не пишется.
   await expect(steps(page)).not.toContainText('Шаг 1 из 2');

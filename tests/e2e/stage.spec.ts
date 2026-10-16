@@ -22,7 +22,7 @@ async function mark(page: Page, id: string) {
 }
 
 test('пока ступень не выбрана, вне ступени нет ни одного узла, а счёт идёт по всей карте', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   await expect(goal(page)).toHaveValue('');
   await expect(stage(page)).toBeDisabled();
@@ -31,7 +31,7 @@ test('пока ступень не выбрана, вне ступени нет 
 });
 
 test('выбор ступени делит узлы на виды и считает освоенное в ступени и по разделам', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   await goal(page).selectOption({ label: 'Экзамен' });
   // Ступень ученик выбирает сам; пока она не выбрана, вне ступени нет никого.
@@ -67,7 +67,7 @@ test('выбор ступени делит узлы на виды и счита�
 });
 
 test('смена цели не меняет прогресс, а выбранная ступень переживает перезагрузку', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await mark(page, 'a2');
 
   await goal(page).selectOption({ label: 'Экзамен' });
@@ -96,7 +96,7 @@ test('сохранённая ступень, которой больше нет 
   await page.addInitScript(() => {
     localStorage.setItem('python-map/stage', JSON.stringify({ goalId: 'exam', stageId: 'removed' }));
   });
-  await page.goto('/');
+  await page.goto('./');
 
   await expect(goal(page)).toHaveValue('');
   await expectViews(page, { b1: 'ahead' });

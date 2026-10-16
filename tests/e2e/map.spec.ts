@@ -7,7 +7,7 @@ const edges = (page: Page) =>
 const back = (page: Page) => page.getByRole('button', { name: '← Обзор' });
 
 test('обзор показывает разделы с числом тем и стрелки между ними', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   await expect(heading(page)).toHaveText('Обзор: разделы карты');
   await expect(section(page, 'alpha')).toContainText('Раздел Альфа');
@@ -25,7 +25,7 @@ test('обзор показывает разделы с числом тем и �
 });
 
 test('щелчок по разделу открывает граф его тем, возврат к обзору — одной кнопкой', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   await section(page, 'beta').click();
   await expect(heading(page)).toHaveText('Раздел Бета');
@@ -57,7 +57,7 @@ test('щелчок по разделу открывает граф его тем
 test('раздел заданий ЕГЭ показан рядами по ступеням, у задания видно, на какие разделы оно опирается', async ({
   page,
 }) => {
-  await page.goto('/');
+  await page.goto('./');
   await section(page, 'gamma').click();
 
   await expect(page.locator('.task-row-title')).toHaveText(['Ступень 2']);
@@ -66,7 +66,7 @@ test('раздел заданий ЕГЭ показан рядами по сту
 });
 
 test('карту можно перетаскивать и масштабировать, а перетаскивание не открывает узел', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await section(page, 'alpha').click();
   const a1 = page.locator('[data-node="a1"]');
   const before = (await a1.boundingBox())!;

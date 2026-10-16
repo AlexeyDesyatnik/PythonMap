@@ -14,7 +14,7 @@ async function chooseStage(page: Page, goalTitle: string, stageTitle: string) {
 }
 
 test('пока ступень не выбрана, панель маршрута предлагает её выбрать', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   await expect(routePanel(page)).toContainText('Выберите цель и ступень');
   await expect(routeItems(page)).toHaveCount(0);
@@ -27,7 +27,7 @@ test('пока ступень не выбрана, панель маршрута
 });
 
 test('маршрут идёт по порядку, выделен на карте и открывает узлы', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await chooseStage(page, 'Экзамен', 'Ступень 2');
 
   await expect(routeItems(page)).toHaveText([/Тема А1/, /Тема А2/, /Тема Б1/, /7\. Учебное задание/]);
@@ -49,7 +49,7 @@ test('маршрут идёт по порядку, выделен на карт�
 });
 
 test('маршрут пересчитывается после отметки, снятия отметки и смены ступени', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await chooseStage(page, 'Экзамен', 'Ступень 2');
 
   // Отметка вне очереди: каскад освоил и пререквизиты Б1.
@@ -70,7 +70,7 @@ test('маршрут пересчитывается после отметки, �
 });
 
 test('когда все узлы ступени освоены, панель сообщает, что ступень достигнута', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await chooseStage(page, 'Экзамен', 'Ступень 1');
 
   await (await node(page, 'a2')).click();
@@ -90,7 +90,7 @@ test('когда все узлы ступени освоены, панель с�
 });
 
 test('темы из других разделов в блоке показывают отметку и шаг маршрута', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await chooseStage(page, 'Экзамен', 'Ступень 2');
   await (await node(page, 'a1')).click();
   await masteredBox(page).check();

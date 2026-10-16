@@ -20,16 +20,16 @@ async function seedProgress(page: Page, ids: string[]) {
 
 test('ссылка с прогрессом получается одним действием и несёт только верхние освоенные узлы', async ({ page }) => {
   await seedProgress(page, ['a1', 'a2', 'd1']);
-  await page.goto('/');
+  await page.goto('./');
 
   await page.getByRole('button', { name: 'Ссылка с прогрессом' }).click();
   const link = page.getByRole('textbox', { name: 'Ссылка с прогрессом' });
-  await expect(link).toHaveValue(/\/#progress=a2,d1$/);
+  await expect(link).toHaveValue(/^http:\/\/localhost:\d+\/PythonMap\/#progress=a2,d1$/);
 });
 
 test('ссылка в браузере без прогресса применяется сразу, остальное восстанавливается каскадом', async ({ page }) => {
   // Узла removed на карте нет — он отбрасывается молча.
-  await page.goto('/#progress=b1,removed');
+  await page.goto('./#progress=b1,removed');
 
   await expect(question(page)).toHaveCount(0);
   await expectMastered(page, ['a1', 'a2', 'b1'], ['exam-1', 'd1']);
@@ -42,7 +42,7 @@ test('ссылка в браузере без прогресса применя�
 
 test('ссылка без узлов текущей карты ничего не спрашивает и прогресс не трогает', async ({ page }) => {
   await seedProgress(page, ['d1']);
-  await page.goto('/#progress=removed');
+  await page.goto('./#progress=removed');
 
   await expect(page.locator('[data-open-section]')).toBeVisible();
   await expect(question(page)).toHaveCount(0);
@@ -57,7 +57,7 @@ for (const [answer, mastered, notMastered] of [
 ] as const) {
   test(`ссылка при уже имеющемся прогрессе: «${answer}»`, async ({ page }) => {
     await seedProgress(page, ['d1']);
-    await page.goto('/#progress=a2');
+    await page.goto('./#progress=a2');
 
     // Пока ученик не ответил, ничего не меняется — даже после перезагрузки.
     await expect(question(page)).toBeVisible();

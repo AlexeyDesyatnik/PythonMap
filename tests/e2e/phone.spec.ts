@@ -38,7 +38,7 @@ const centre = async (page: Page, selector: string) => {
 };
 
 test('на телефоне узел открывается с первого касания, даже если перед этим граф двигали', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await sectionList(page).getByRole('button', { name: /Раздел Альфа/ }).tap();
 
   // Граф сдвинули пальцем вбок и отпустили.
@@ -54,7 +54,7 @@ test('на телефоне узел открывается с первого к
 });
 
 test('на телефоне палец, чуть дрогнувший при касании, всё равно открывает узел', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await sectionList(page).getByRole('button', { name: /Раздел Альфа/ }).tap();
 
   const { x, y } = await centre(page, '[data-node="a2"]');
@@ -63,7 +63,7 @@ test('на телефоне палец, чуть дрогнувший при к�
 });
 
 test('на телефоне первым идёт маршрут, а вместо обзора — список разделов со счётом', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await chooseStage(page);
 
   // Маршрут со следующим шагом виден сразу, без прокрутки.
@@ -83,7 +83,7 @@ test('на телефоне первым идёт маршрут, а вмест�
 });
 
 test('на телефоне раздел открывается из списка, узел открывается и отмечается', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await chooseStage(page);
 
   await sectionList(page).getByRole('button', { name: /Раздел Альфа/ }).tap();
@@ -122,7 +122,7 @@ test('на телефоне раздел открывается из списк�
 });
 
 test('на телефоне шаг маршрута открывает узел вместе с его разделом', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await chooseStage(page);
 
   await routePanel(page).getByRole('button', { name: /Тема Б1/ }).tap();

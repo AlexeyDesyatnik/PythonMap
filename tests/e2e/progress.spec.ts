@@ -10,7 +10,7 @@ async function expectMastered(page: Page, mastered: string[], notMastered: strin
 }
 
 test('отметка узла отмечает его пререквизиты и сохраняется после перезагрузки', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   await (await node(page, 'a2')).click();
   await expect(panel(page)).toContainText('Тема А2');
@@ -24,7 +24,7 @@ test('отметка узла отмечает его пререквизиты �
 });
 
 test('перед снятием отметки предупреждает об опирающихся узлах; от снятия можно отказаться', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   // Отметить можно любой узел: задание отмечается сразу, без своих пререквизитов.
   await (await node(page, 'exam-1')).click();
   await masteredBox(page).check();
@@ -52,7 +52,7 @@ test('перед снятием отметки предупреждает об �
 });
 
 test('отметка без опирающихся освоенных узлов снимается без предупреждения', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await (await node(page, 'a2')).click();
   await masteredBox(page).check();
 
@@ -69,7 +69,7 @@ test('сохранённый прогресс приводится к инвар
       sessionStorage.setItem('seeded', '1');
     }
   });
-  await page.goto('/');
+  await page.goto('./');
 
   await expectMastered(page, ['a1', 'a2', 'b1'], ['exam-1']);
   const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('python-map/progress')!));

@@ -8,7 +8,7 @@ const unlocks = (page: Page) => panel(page).getByRole('list', { name: 'Откр�
 test('панель показывает описание, материалы и контрольные задачи; ссылки открываются в новой вкладке', async ({
   page,
 }) => {
-  await page.goto('/');
+  await page.goto('./');
   await (await node(page, 'a1')).click();
 
   await expect(panel(page)).toContainText('Тема А1');
@@ -24,7 +24,7 @@ test('панель показывает описание, материалы и 
 });
 
 test('у узла без материалов и задач — пометка «материалы появятся»; у задания ЕГЭ виден номер', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await (await node(page, 'a2')).click();
   await expect(panel(page)).toContainText('Материалы появятся');
   await expect(panel(page).getByRole('link', { name: /Учебник/ })).toHaveCount(0);
@@ -35,7 +35,7 @@ test('у узла без материалов и задач — пометка �
 });
 
 test('панель показывает пререквизиты и открываемые узлы с отметками; по ним можно переходить', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await (await node(page, 'a2')).click();
   await panel(page).getByRole('checkbox', { name: 'Освоен' }).check();
 
@@ -58,7 +58,7 @@ test('панель показывает пререквизиты и открыв
 });
 
 test('ссылка «сообщить об ошибке» ведёт в канал и подставляет название узла', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await (await node(page, 'exam-1')).click();
 
   const report = panel(page).getByRole('link', { name: 'Сообщить об ошибке' });

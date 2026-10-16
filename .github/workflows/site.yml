@@ -1,0 +1,69 @@
+# Проверки и публикация сайта.
+# При каждом изменении в main и в каждом запросе на слияние: проверка данных карты,
+# тесты ядра, сборка с проверкой типов и сквозные тесты сайта в браузере.
+# Если всё прошло и это main — собранный сайт публикуется на GitHub Pages.
+name: Проверки и публикация
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# По одной ветке запуски идут по очереди. В запросе на слияние новый запуск отменяет
+# старый, а публикацию из main не прерываем на середине.
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  checks:
+    name: Проверки
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      # Блокирующая ошибка в данных останавливает всё дальнейшее, в том числе публикацию.
+      # Предупреждения печатаются в журнал и выносятся пометками на страницу запуска.
+      - name: Проверка данных карты
+        run: npm run check:data
+
+      - name: Тесты ядра
+        run: npm test
+
+      - name: Проверка типов и сборка сайта
+        run: npm run build
+
+      - name: Браузер для сквозных тестов
+        run: npx playwright install --with-deps chromium
+      - name: Сквозные тесты сайта
+        run: npm run test:e2e
+
+      - name: Сайт для публикации
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    name: Публикация на GitHub Pages
+    needs: checks
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -465,7 +465,11 @@ body {
 
 .node-panel {
   position: relative;
-  flex: none;
+  /* Длинная панель сжимается и прокручивается, оставляя место узлам раздела. */
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: 70%;
+  overflow-y: auto;
   box-sizing: border-box;
   padding: 16px;
   background: var(--panel-bg);
@@ -502,6 +506,96 @@ body {
 .node-panel-mark input {
   width: 18px;
   height: 18px;
+}
+
+.node-panel-description {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.node-panel-part {
+  margin-top: 16px;
+}
+
+.node-panel-part h3 {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.node-panel-links,
+.node-panel-nodes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+}
+
+.node-panel-links li + li {
+  margin-top: 4px;
+}
+
+.node-panel a {
+  color: var(--selected);
+}
+
+.node-panel-hint,
+.node-panel-note {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.node-panel > .node-panel-note {
+  margin-top: 16px;
+}
+
+.node-panel-node {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.node-panel-node:hover {
+  background: var(--node-bg);
+}
+
+/* Значок вида узла — такой же, как в легенде; цвет задают классы legend-*. */
+:where(.node-panel-node)::before {
+  content: '';
+  flex: none;
+  width: 14px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 2px solid var(--node-border);
+  border-radius: 3px;
+  background: var(--node-bg);
+}
+
+.node-panel-view {
+  margin-left: auto;
+  padding-left: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.node-panel-report {
+  margin: 16px 0 0;
+  font-size: 13px;
 }
 
 .dialog-backdrop {

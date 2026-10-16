@@ -6,6 +6,12 @@ nodes:
     kind: topic
     title: Тема А1
     description: Первая тема.
+    materials:
+      - title: Учебник по А1
+        url: https://example.org/a1-book
+    checkTasks:
+      - title: Задача по А1
+        url: https://example.org/a1-task
   - id: a2
     kind: topic
     title: Тема А2

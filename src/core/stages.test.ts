@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { stageNodes } from '.';
+import { stageNodes, unlockedNodes } from '.';
 import { testMap } from './testing';
 
 const sorted = (ids: Set<string>) => [...ids].sort();
@@ -40,5 +40,17 @@ describe('stageNodes', () => {
     });
 
     expect(sorted(stageNodes(map, 'ege', 'ege-1'))).toEqual(['a', 'b']);
+  });
+});
+
+describe('unlockedNodes', () => {
+  it('перечисляет узлы, для которых узел — прямой пререквизит, в порядке карты, по всем разделам', () => {
+    // d опирается на a только через b — его узел a не открывает.
+    const map = testMap({
+      sections: { one: { a: [], b: ['a'], d: ['b'] }, two: { c: ['a'], e: ['b', 'a'] } },
+    });
+
+    expect(unlockedNodes(map, 'a')).toEqual(['b', 'c', 'e']);
+    expect(unlockedNodes(map, 'd')).toEqual([]);
   });
 });

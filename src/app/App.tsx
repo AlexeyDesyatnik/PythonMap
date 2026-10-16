@@ -78,6 +78,8 @@ export function App({ map, layout }: { map: LearningMap; layout: MapLayout }) {
                 map={map}
                 node={selected}
                 progress={progress}
+                views={views}
+                onSelect={select}
                 onMark={() => changeMark((p) => markMastered(map, p, selected.id))}
                 onUnmark={() => changeMark((p) => unmarkMastered(map, p, selected.id))}
                 onClose={phone ? undefined : () => setSelectedId(null)}

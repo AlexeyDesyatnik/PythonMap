@@ -30,6 +30,11 @@ export function withReliantNodes(map: LearningMap, ids: Iterable<string>): Set<s
   return reachable(ids, reliant);
 }
 
+/** Узлы, которые узел открывает: те, для кого он прямой пререквизит. В порядке карты. */
+export function unlockedNodes(map: LearningMap, id: string): string[] {
+  return map.nodes.filter((n) => n.prerequisites.includes(id)).map((n) => n.id);
+}
+
 /** Всё, куда можно дойти от `ids` по стрелкам `next`; узлы не из `next` пропускаются. */
 function reachable(ids: Iterable<string>, next: Map<string, string[]>): Set<string> {
   const result = new Set<string>();

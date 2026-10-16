@@ -4,3 +4,8 @@ declare module 'virtual:map-data' {
   const mapData: { data: RawMapData; layout: MapLayout };
   export default mapData;
 }
+
+interface ImportMetaEnv {
+  /** Адрес канала для сообщений об ошибках; `{узел}` заменяется названием узла. */
+  readonly VITE_REPORT_URL?: string;
+}

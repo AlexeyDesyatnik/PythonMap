@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   markMastered,
+  mergeProgress,
   nodeViews,
   progressCount,
   route,
+  unfoldProgress,
   unmarkMastered,
   type LearningMap,
   type Progress,
@@ -13,6 +15,8 @@ import type { MapLayout } from '../layout';
 import { MarksStep, StageStep, type FirstVisitStep } from './FirstVisit';
 import { MapView } from './MapView';
 import { NodePanel } from './NodePanel';
+import { ProgressLinkQuestion, ShareProgress, type LinkAnswer } from './ProgressLink';
+import { clearProgressLink, readProgressLink } from './linkAddress';
 import { RoutePanel } from './RoutePanel';
 import { SectionNodes } from './SectionNodes';
 import { StagePicker } from './StagePicker';
@@ -30,6 +34,30 @@ import { usePhone } from './usePhone';
 export function App({ map, layout }: { map: LearningMap; layout: MapLayout }) {
   const [progress, setProgress] = useState<Progress>(() => loadProgress(map));
   const [stage, setStage] = useState(() => loadStage(map));
+  // Прогресс из ссылки, по которой открыта страница, пока она не обработана.
+  const [linked, setLinked] = useState(() => readLinked(map));
+  useEffect(() => {
+    // Ссылку могут вставить и в уже открытую вкладку — тогда меняется только часть после `#`.
+    const onHashChange = () => setLinked(readLinked(map));
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, [map]);
+  const answerLink = (answer: LinkAnswer) => {
+    if (!linked) return;
+    if (answer === 'replace') setProgress(linked);
+    if (answer === 'merge') setProgress((p) => mergeProgress(p, linked));
+    setLinked(null);
+    clearProgressLink();
+  };
+  // Спрашивать нечего, если своего прогресса нет, если он тот же, что в ссылке,
+  // или если в ссылке не осталось ни одного узла текущей карты.
+  const askLink = linked !== null && progress.size > 0 && linked.size > 0 && !sameProgress(progress, linked);
+  useEffect(() => {
+    if (!linked || askLink) return;
+    if (progress.size === 0) setProgress(linked);
+    setLinked(null);
+    clearProgressLink();
+  }, [linked, askLink, progress]);
   // Шаги первого визита; `null` — их уже прошли или пропустили.
   const [firstVisit, setFirstVisit] = useState<FirstVisitStep | null>(() => (loadFirstVisitDone() ? null : 'stage'));
   const finishFirstVisit = () => {
@@ -78,6 +106,7 @@ export function App({ map, layout }: { map: LearningMap; layout: MapLayout }) {
         <p className="progress-total" data-testid="progress-total">
           Освоено {counts.total.mastered} из {counts.total.total}
         </p>
+        <ShareProgress map={map} progress={progress} />
         <ul className="legend" aria-label="Виды узлов">
           {Object.entries(VIEW_TITLES).map(([view, title]) => (
             <li key={view} className={`legend-item legend-${view}`}>
@@ -119,9 +148,20 @@ export function App({ map, layout }: { map: LearningMap; layout: MapLayout }) {
           </div>
         )}
       </div>
-      {firstVisit === 'stage' && (
+      {askLink && <ProgressLinkQuestion linked={linked} own={progress} onAnswer={answerLink} />}
+      {/* Шаги первого визита ждут, пока ссылка обработана: шаг 1 смотрит, есть ли уже прогресс. */}
+      {firstVisit === 'stage' && !linked && (
         <StageStep map={map} stage={stage} marksStepNext={progress.size === 0} onDone={afterStageStep} />
       )}
     </main>
   );
+}
+
+function readLinked(map: LearningMap): Progress | null {
+  const ids = readProgressLink();
+  return ids && unfoldProgress(map, ids);
+}
+
+function sameProgress(a: Progress, b: Progress): boolean {
+  return a.size === b.size && [...a].every((id) => b.has(id));
 }

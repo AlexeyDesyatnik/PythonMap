@@ -27,7 +27,7 @@ test('пока ступень не выбрана, вне ступени нет 
   await expect(goal(page)).toHaveValue('');
   await expect(stage(page)).toBeDisabled();
   await expectViews(page, { a1: 'available', a2: 'ahead', b1: 'ahead', 'exam-1': 'ahead' });
-  await expect(total(page)).toHaveText('Освоено 0 из 4');
+  await expect(total(page)).toHaveText('Освоено 0 из 5');
 });
 
 test('выбор ступени делит узлы на виды и считает освоенное в ступени и по разделам', async ({ page }) => {
@@ -38,7 +38,7 @@ test('выбор ступени делит узлы на виды и счита�
   await expect(stage(page)).toBeEnabled();
   await expect(stage(page)).toHaveValue('');
   await expectViews(page, { b1: 'ahead', 'exam-1': 'ahead' });
-  await expect(total(page)).toHaveText('Освоено 0 из 4');
+  await expect(total(page)).toHaveText('Освоено 0 из 5');
 
   await stage(page).selectOption({ label: 'Ступень 1' });
   await expectViews(page, { a1: 'available', a2: 'ahead', b1: 'outside', 'exam-1': 'outside' });

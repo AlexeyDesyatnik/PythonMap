@@ -2,9 +2,9 @@
 import type { Page } from '@playwright/test';
 
 /** Раздел каждого узла учебной карты. */
-const SECTION_OF: Record<string, string> = { a1: 'alpha', a2: 'alpha', b1: 'beta', 'exam-1': 'gamma' };
+const SECTION_OF: Record<string, string> = { a1: 'alpha', a2: 'alpha', b1: 'beta', 'exam-1': 'gamma', d1: 'delta' };
 
-export const SECTIONS = ['alpha', 'beta', 'gamma'];
+export const SECTIONS = ['alpha', 'beta', 'gamma', 'delta'];
 
 const mapArea = (page: Page) => page.locator('[data-open-section]');
 

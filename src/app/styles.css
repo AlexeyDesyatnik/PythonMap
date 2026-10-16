@@ -944,3 +944,54 @@ body {
     padding-bottom: 50vh;
   }
 }
+
+/* Ссылка с прогрессом: кнопка в шапке и поле со ссылкой отдельной строкой под ней. */
+.share-progress,
+.share-progress-popup button {
+  padding: 4px 12px;
+  font: inherit;
+  font-size: 14px;
+  border: 1px solid var(--section-border);
+  border-radius: 6px;
+  background: var(--panel-bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.share-progress:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.share-progress-popup {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  /* Под всеми элементами шапки, а не между кнопкой и легендой. */
+  order: 1;
+  gap: 8px 12px;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border: 1px solid var(--section-border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  font-size: 14px;
+}
+
+.share-progress-popup input {
+  flex: 1 1 320px;
+  min-width: 0;
+  padding: 4px 6px;
+  font: inherit;
+  border: 1px solid var(--section-border);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.share-progress-popup p {
+  flex: 1 1 320px;
+  margin: 0;
+  color: var(--muted);
+}

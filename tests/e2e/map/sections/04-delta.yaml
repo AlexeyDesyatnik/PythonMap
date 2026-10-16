@@ -1,0 +1,7 @@
+id: delta
+title: Раздел Дельта
+nodes:
+  - id: d1
+    kind: topic
+    title: Тема Д1
+    description: Тема, ни на что не опирающаяся и не входящая в ступени.

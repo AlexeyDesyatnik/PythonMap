@@ -75,7 +75,7 @@ test('на телефоне первым идёт маршрут, а вмест�
   // Вместо графа обзора — список разделов от основ к заданиям ЕГЭ.
   await expect(page.locator('svg [data-section]')).toHaveCount(0);
   const items = sectionList(page).getByRole('listitem');
-  await expect(items).toHaveText([/Раздел Альфа/, /Раздел Бета/, /Раздел Задания/]);
+  await expect(items).toHaveText([/Раздел Альфа/, /Раздел Бета/, /Раздел Задания/, /Раздел Дельта/]);
   await expect(items.nth(0)).toContainText('освоено 0 из 2');
   await expect(items.nth(0)).toContainText('2 шага маршрута');
 

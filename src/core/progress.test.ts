@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { markMastered, normalizeProgress, unmarkAffected, unmarkMastered } from '.';
+import {
+  foldProgress,
+  markMastered,
+  mergeProgress,
+  normalizeProgress,
+  unfoldProgress,
+  unmarkAffected,
+  unmarkMastered,
+} from '.';
 import { testMap } from './testing';
 
 const sorted = (ids: ReadonlySet<string>) => [...ids].sort();
@@ -82,5 +90,31 @@ describe('normalizeProgress', () => {
     const map = testMap({ nodes: { a: [], new: [], b: ['a'], c: ['b', 'new'] } });
 
     expect(sorted(normalizeProgress(map, ['a', 'b', 'c']))).toEqual(['a', 'b', 'c', 'new']);
+  });
+});
+
+describe('ссылка с прогрессом', () => {
+  // Ромб a → b, c → d и отдельная ветка e → f.
+  const map = testMap({ nodes: { a: [], b: ['a'], c: ['a'], d: ['b', 'c'], e: [], f: ['e'] } });
+
+  it('несёт только верхние освоенные узлы, в порядке карты', () => {
+    expect(foldProgress(map, new Set(['a', 'b', 'c', 'e']))).toEqual(['b', 'c', 'e']);
+  });
+
+  it('разворачивается обратно в тот же прогресс', () => {
+    for (const ids of [[], ['a'], ['a', 'b'], ['a', 'b', 'c', 'd'], ['a', 'c', 'e', 'f'], ['a', 'b', 'c', 'd', 'e', 'f']]) {
+      const progress = new Set(ids);
+      expect(sorted(unfoldProgress(map, foldProgress(map, progress)))).toEqual(ids);
+    }
+  });
+
+  it('при разворачивании восстанавливает пререквизиты каскадом и молча отбрасывает неизвестные узлы', () => {
+    expect(sorted(unfoldProgress(map, ['d', 'removed']))).toEqual(['a', 'b', 'c', 'd']);
+  });
+});
+
+describe('mergeProgress', () => {
+  it('освоено всё, что освоено хотя бы в одном из двух прогрессов', () => {
+    expect(sorted(mergeProgress(new Set(['a', 'b']), new Set(['a', 'e', 'f'])))).toEqual(['a', 'b', 'e', 'f']);
   });
 });

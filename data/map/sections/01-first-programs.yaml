@@ -46,7 +46,7 @@ nodes:
     kind: topic
     title: Арифметика
     description: Действия с целыми и дробными числами, целочисленное деление // и остаток %, округление и модуль math. Через деление и остаток проверяют делимость и работают с цифрами.
-    prerequisites: [variables]
+    prerequisites: [input-output]
     materials:
       - title: "Хендбук Яндекса: операции с числами, деление // и остаток %"
         url: https://contest.yandex.ru/tracks/python/basic-python-constructs/input-output-numbers-strings-formatting#operacii-s-chislami

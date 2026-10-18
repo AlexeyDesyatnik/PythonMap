@@ -5,7 +5,7 @@ nodes:
     kind: topic
     title: Графы и их хранение
     description: Граф хранят списками смежности или матрицей смежности, читая рёбра из входных данных. С этого начинается любая задача на графы.
-    prerequisites: [split-input]
+    prerequisites: [lists]
 
   - id: dfs
     kind: topic

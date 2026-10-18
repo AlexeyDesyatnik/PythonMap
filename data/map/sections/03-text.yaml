@@ -37,15 +37,15 @@ nodes:
     kind: topic
     title: Ввод чисел одной строкой
     description: split разбивает строку на части, map с int превращает их в числа, join собирает список обратно в строку. Так читают и выводят данные, записанные в одну строку.
-    prerequisites: [lists, strings, conditions]
+    prerequisites: [strings, for-range, conditions]
     materials:
       - title: "Информатикс: методы split и join — теория курса Кириенко"
         url: https://informatics.msk.ru/mod/book/view.php?id=4655&chapterid=479
     checkTasks:
-      - title: "Информатикс: «Вывести в обратном порядке»"
-        url: https://informatics.msk.ru/mod/statements/view.php?id=4163&chapterid=3839
-      - title: "acmp.ru: «Разворот»"
-        url: https://acmp.ru/index.asp?main=task&id_task=149
+      - title: "acmp.ru: «A+B»"
+        url: https://acmp.ru/index.asp?main=task&id_task=1
+      - title: "acmp.ru: «Зарплата»"
+        url: https://acmp.ru/index.asp?main=task&id_task=21
 
   - id: files
     kind: topic

@@ -30,7 +30,7 @@ nodes:
     egeNumber: 8
     title: Перебор слов
     description: Слова из заданных букв выписаны по алфавиту; нужно найти номер или количество слов с условием. Слова перебираются в нужном порядке через itertools.product.
-    prerequisites: [itertools-enumeration, conditions]
+    prerequisites: [itertools-enumeration]
 
   - id: ege-table-rows
     kind: ege-task
@@ -44,7 +44,7 @@ nodes:
     egeNumber: 10
     title: Маска подсети
     description: По IP-адресу узла и маске нужно найти адрес сети или посчитать адреса с условием. Адрес сети — поразрядная конъюнкция адреса и маски.
-    prerequisites: [number-systems, split-input]
+    prerequisites: [number-systems, lists]
 
   - id: ege-executor-programs
     kind: ege-task
@@ -93,7 +93,7 @@ nodes:
     egeNumber: 22
     title: Параллельные процессы
     description: Процессы зависят друг от друга; нужно найти время их выполнения или число процессов, идущих одновременно. Время начала каждого процесса считается рекурсией с запоминанием.
-    prerequisites: [dp-memo, files]
+    prerequisites: [dp-memo, files, lists]
 
   - id: ege-dag-paths
     kind: ege-task

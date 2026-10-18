@@ -5,28 +5,86 @@ nodes:
     kind: topic
     title: Списки и кортежи
     description: Список хранит много значений под одним именем — элементы добавляют, читают и меняют по индексу, перебирают в цикле, вырезают срезами. Кортеж — неизменяемый список; распаковка присваивает несколько переменных сразу.
-    prerequisites: [for-range]
+    prerequisites: [split-input]
+    materials:
+      - title: "Хендбук Яндекса: списки — создание, изменение, методы"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/strings-tuples-lists#spiski-izmenyaemye-kollekcii
+      - title: "Хендбук Яндекса: кортежи"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/strings-tuples-lists#kortezhi-neizmenyaemye-spiski
+      - title: "Информатикс: списки — теория курса Кириенко"
+        url: https://informatics.msk.ru/mod/book/view.php?id=4655
+    checkTasks:
+      - title: "Информатикс: «Переставить соседние»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=4163&chapterid=3841
+      - title: "acmp.ru: «Разворот»"
+        url: https://acmp.ru/index.asp?main=task&id_task=149
 
   - id: list-tools
     kind: topic
     title: Функции и сортировка списков
     description: len, sum, min, max, методы списков, генераторы списков в квадратных скобках и сортировка sort и sorted. Заменяют многие циклы одной строкой.
     prerequisites: [lists]
+    materials:
+      - title: "Хендбук Яндекса: методы и операции со списками"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/strings-tuples-lists#metody-i-operacii-so-spiskami
+      - title: "Хендбук Яндекса: списочные выражения"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/list-comprehensions-and-python-memory-model#chto-takoe-spisochnye-vyrazheniya-i-zachem-oni-nuzhny
+      - title: "Younglinux: сортировка списков — sort и sorted"
+        url: https://younglinux.info/python/sort
+    checkTasks:
+      - title: "Информатикс: «Переставить min и max»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=4163&chapterid=3843
+      - title: "acmp.ru: «Али-Баба»"
+        url: https://acmp.ru/index.asp?main=task&id_task=759
 
   - id: matrix
     kind: topic
     title: Двумерные списки
     description: Список списков хранит таблицу — например, матрицу или игровое поле. Обходится вложенными циклами по строкам и столбцам.
     prerequisites: [lists, nested-loops]
+    materials:
+      - title: "Информатикс: вложенные списки — теория курса Кириенко"
+        url: https://informatics.msk.ru/mod/book/tool/print/index.php?id=4901
+      - title: "Younglinux: матрицы и вложенные циклы"
+        url: https://younglinux.info/python/matrix
+    checkTasks:
+      - title: "Информатикс: «Максимум»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=32581&chapterid=111362
+      - title: "Информатикс: «Побочная диагональ»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=32581&chapterid=111366
 
   - id: sets
     kind: topic
     title: Множества
     description: Множество хранит значения без повторов и быстро проверяет, есть ли в нём элемент. Умеет объединение, пересечение и разность.
     prerequisites: [lists]
+    materials:
+      - title: "Хендбук Яндекса: множества"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/sets-and-dictionaries#mnozhestva-set
+      - title: "Younglinux: множества и операции над ними"
+        url: https://younglinux.info/python/set
+      - title: "Информатикс: множества — теория курса Кириенко"
+        url: https://informatics.msk.ru/mod/book/tool/print/index.php?id=6693
+    checkTasks:
+      - title: "Информатикс: «Количество различных чисел»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=4535&chapterid=3749
+      - title: "Информатикс: «Встречалось ли число раньше»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=4535&chapterid=3752
 
   - id: dicts
     kind: topic
     title: Словари
     description: Словарь хранит пары ключ — значение и находит значение по ключу. Типовой приём — подсчитать в словаре, сколько раз встретилось каждое значение.
-    prerequisites: [for-range]
+    prerequisites: [lists]
+    materials:
+      - title: "Хендбук Яндекса: словари"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/sets-and-dictionaries#slovari-dict
+      - title: "Younglinux: словари — создание, перебор, методы"
+        url: https://younglinux.info/python/dictionary
+      - title: "Информатикс: словари — теория курса Кириенко"
+        url: https://informatics.msk.ru/mod/book/tool/print/index.php?id=6694
+    checkTasks:
+      - title: "Информатикс: «Словарь синонимов»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=4535&chapterid=3760
+      - title: "Информатикс: «Страны и города»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=4535&chapterid=3765

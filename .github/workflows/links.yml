@@ -1,0 +1,49 @@
+# Еженедельная проверка ссылок карты.
+# Ссылка мёртвая только после нескольких неудач подряд, поэтому история неудач
+# хранится в репозитории (data/link-failures.json) и обновляется этим запуском.
+# Мёртвые ссылки собираются в одну задачу трекера; пока она открыта, следующие
+# запуски обновляют её, а не заводят новую.
+# Запуск вручную (кнопка Run workflow) только обновляет задачу: в историю неудач
+# он не записывается, чтобы несколько нажатий подряд не сделали ссылку мёртвой.
+name: Проверка ссылок
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # каждый понедельник в 9:00 по Москве
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: links
+
+jobs:
+  links:
+    name: Проверка ссылок
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      - name: Проверка ссылок и отчёт в трекер
+        run: npm run check:links -- --report ${{ github.event_name == 'schedule' && '--record' || '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      # История записывается до отчёта, поэтому сохраняем её, даже если отчёт не удался.
+      - name: Сохранение истории неудач
+        if: ${{ !cancelled() && github.event_name == 'schedule' && hashFiles('data/link-failures.json') != '' }}
+        run: |
+          git add data/link-failures.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898283+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update link check failure history'
+          git pull --rebase
+          git push

@@ -5,27 +5,75 @@ nodes:
     kind: topic
     title: Первая программа
     description: Программа из одной строки, которая печатает текст с помощью print. С неё начинается работа с Python — запуск программы и чтение её вывода.
+    materials:
+      - title: "Хендбук Яндекса: установка Python и первая программа"
+        url: https://contest.yandex.ru/tracks/python/introduction/installing-python-and-ide
+    checkTasks:
+      - title: "Информатикс: «100А» — вывести строку из ста букв"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3290&chapterid=3448
 
   - id: variables
     kind: topic
     title: Переменные
     description: Переменная хранит значение под именем, присваивание меняет его. На переменных держится любая программа сложнее одной строки.
     prerequisites: [first-program]
+    materials:
+      - title: "Хендбук Яндекса: что такое переменные и как с ними работать"
+        url: https://contest.yandex.ru/tracks/python/basic-python-constructs/input-output-numbers-strings-formatting#chto-takoe-peremennye-i-kak-s-nimi-rabotat
+      - title: "Younglinux: типы данных и переменные"
+        url: https://younglinux.info/python/variable
+    checkTasks:
+      - title: "Информатикс: «Обмен значений — 1»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3309&chapterid=3470
 
   - id: input-output
     kind: topic
     title: Ввод и вывод
     description: input читает строку, int и float превращают её в число, print с параметрами sep и end и f-строки выводят ответ в нужном виде. Без этого программа не решает задачу для разных данных.
     prerequisites: [variables]
+    materials:
+      - title: "Хендбук Яндекса: ввод и вывод данных, f-строки, sep и end"
+        url: https://contest.yandex.ru/tracks/python/basic-python-constructs/input-output-numbers-strings-formatting#vvod-i-vyvod-dannyh
+      - title: "Younglinux: функции print и input"
+        url: https://younglinux.info/python/input
+    checkTasks:
+      - title: "Информатикс: «Hello, Harry!»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3309&chapterid=3456
+      - title: "Информатикс: «Следующее и предыдущее»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3309&chapterid=3457
 
   - id: arithmetic
     kind: topic
     title: Арифметика
     description: Действия с целыми и дробными числами, целочисленное деление // и остаток %, округление и модуль math. Через деление и остаток проверяют делимость и работают с цифрами.
     prerequisites: [variables]
+    materials:
+      - title: "Хендбук Яндекса: операции с числами, деление // и остаток %"
+        url: https://contest.yandex.ru/tracks/python/basic-python-constructs/input-output-numbers-strings-formatting#operacii-s-chislami
+      - title: "Younglinux: встроенные функции round, abs, divmod и pow"
+        url: https://younglinux.info/python/builtin-functions
+      - title: "Younglinux: модуль math — как подключить и чем пользоваться"
+        url: https://younglinux.info/python/modules
+    checkTasks:
+      - title: "Информатикс: «Дележ яблок — 1»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3309&chapterid=3458
+      - title: "Информатикс: «Электронные часы — 1»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3309&chapterid=3468
 
   - id: conditions
     kind: topic
     title: Условия
     description: Сравнения, if с ветками elif и else и логические операции and, or, not. Так программа по-разному отвечает на разные входные данные.
     prerequisites: [input-output]
+    materials:
+      - title: "Хендбук Яндекса: условный оператор"
+        url: https://contest.yandex.ru/tracks/python/basic-python-constructs/conditional-statements
+      - title: "Younglinux: операторы сравнения и логические and, or, not"
+        url: https://younglinux.info/python/operators
+      - title: "Younglinux: ветвление if-else"
+        url: https://younglinux.info/python/if
+    checkTasks:
+      - title: "acmp.ru: «Больше-меньше»"
+        url: https://acmp.ru/index.asp?main=task&id_task=25
+      - title: "Информатикс: «Ход ладьи»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3380&chapterid=3509

@@ -6,24 +6,61 @@ nodes:
     title: Функции
     description: Функция — именованный кусок программы с параметрами, def создаёт её, return возвращает результат. Нужна, чтобы не повторять код и решать задачу по частям — например, вынести проверку «подходит ли число» в отдельную функцию.
     prerequisites: [conditions]
+    materials:
+      - title: "Хендбук Яндекса: функции, аргументы и return"
+        url: https://contest.yandex.ru/tracks/python/functions-in-python/functions-scopes-and-parameters
+      - title: "Younglinux: определение и вызов функций"
+        url: https://younglinux.info/python/function
+      - title: "Younglinux: оператор return"
+        url: https://younglinux.info/python/return
+    checkTasks:
+      - title: "Информатикс: «Принадлежит ли точка кругу»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3962&chapterid=3794
+      - title: "Информатикс: «Принадлежит ли точка квадрату — 1»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3962&chapterid=3792
 
   - id: scope
     kind: topic
     title: Локальные и глобальные переменные
     description: Переменные внутри функции не видны снаружи, а внешние без global нельзя изменить. Без этого функции ведут себя неожиданно и портят чужие значения.
     prerequisites: [functions]
+    materials:
+      - title: "Хендбук Яндекса: область видимости, локальные и глобальные переменные"
+        url: https://contest.yandex.ru/tracks/python/functions-in-python/functions-scopes-and-parameters#chto-takoe-oblast-vidimosti-chem-razlichayutsya-lokalnye-i-globalnye-peremennye
+      - title: "Younglinux: локальные и глобальные переменные"
+        url: https://younglinux.info/python/local-global
 
   - id: lambda-key
     kind: topic
     title: lambda и сортировка по ключу
     description: lambda — короткая функция без имени. Её передают в sorted, min и max, чтобы упорядочить, например, учеников по баллу или слова по длине.
     prerequisites: [functions, list-tools]
+    materials:
+      - title: "Хендбук Яндекса: лямбда-функции, sorted, min и max с ключом"
+        url: https://contest.yandex.ru/tracks/python/functions-in-python/positional-keyword-higher-order-and-lambda-functions#kak-ustroeny-lyambda-funkcii-i-kogda-ih-udobno-primenyat-v-python
+      - title: "Younglinux: lambda-функции"
+        url: https://younglinux.info/python/lambda
+      - title: "Younglinux: сортировка с ключом key"
+        url: https://younglinux.info/python/sort
+    checkTasks:
+      - title: "Информатикс: «Результаты олимпиады (2)»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=4818&chapterid=111161
 
   - id: recursion
     kind: topic
     title: Рекурсия
     description: Функция, которая вызывает саму себя для меньшей задачи, пока не дойдёт до простого случая. Нужна для задач, которые естественно сводятся к самим себе; глубину рекурсии в Python ограничивают, и её можно увеличить через sys.setrecursionlimit.
     prerequisites: [functions]
+    materials:
+      - title: "Хендбук Яндекса: рекурсивные функции"
+        url: https://contest.yandex.ru/tracks/python/functions-in-python/recursion-decorators-generators#chto-takoe-rekursivnye-funkcii-i-kak-ih-pravilno-sostavlyat
+      - title: "Информатикс: рекурсия — теория курса Кириенко"
+        url: https://informatics.msk.ru/mod/book/view.php?id=4384&chapterid=474
+    checkTasks:
+      - title: "Информатикс: «Сложение без сложения»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3962&chapterid=3801
+      - title: "Информатикс: «Сумма последовательности»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3962&chapterid=3804
 
   - id: backtracking
     kind: topic

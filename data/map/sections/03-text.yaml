@@ -6,21 +6,57 @@ nodes:
     title: Строки
     description: Длина строки, сложение, проверка вхождения через in, обращение к символу по индексу и срезы. С этого начинается обработка текста.
     prerequisites: [input-output]
+    materials:
+      - title: "Информатикс: строки, длина и срезы — теория курса Кириенко"
+        url: https://informatics.msk.ru/mod/book/tool/print/index.php?id=4382
+      - title: "Younglinux: строки — символы по индексу, срезы и методы"
+        url: https://younglinux.info/python/string
+    checkTasks:
+      - title: "Информатикс: «Делаем срезы»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3863&chapterid=3735
 
   - id: string-processing
     kind: topic
     title: Обработка строк
     description: Перебор символов в цикле, методы строк — замена, подсчёт, поиск, смена регистра — и коды символов ord и chr. Решают типовые задачи с текстом.
     prerequisites: [strings, for-range]
+    materials:
+      - title: "Хендбук Яндекса: методы строк"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/strings-tuples-lists#metody-strok
+      - title: "Younglinux: коды символов ord и chr"
+        url: https://younglinux.info/python/builtin-functions
+    checkTasks:
+      - title: "Информатикс: «Замена подстроки»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3863&chapterid=3744
+      - title: "Информатикс: «Символы в заданном интервале»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=5761&chapterid=111303
 
   - id: split-input
     kind: topic
     title: Ввод чисел одной строкой
     description: split разбивает строку на части, map с int превращает их в числа, join собирает список обратно в строку. Так читают и выводят данные, записанные в одну строку.
     prerequisites: [lists, strings]
+    materials:
+      - title: "Информатикс: методы split и join — теория курса Кириенко"
+        url: https://informatics.msk.ru/mod/book/view.php?id=4655&chapterid=479
+    checkTasks:
+      - title: "Информатикс: «Вывести в обратном порядке»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=4163&chapterid=3839
+      - title: "acmp.ru: «Разворот»"
+        url: https://acmp.ru/index.asp?main=task&id_task=149
 
   - id: files
     kind: topic
     title: Чтение данных из файла
     description: open и with открывают файл; данные читаются целиком, построчно или как числа через пробел. Так начинаются задачи с большими файлами данных.
     prerequisites: [string-processing, split-input]
+    materials:
+      - title: "Хендбук Яндекса: чтение и запись текстовых файлов, open и with"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/stream-input-output-text-files-json#kakie-metody-pozvolyayut-schityvat-i-zapisyvat-dannye-iz-tekstovyh-fajlov
+      - title: "Younglinux: функция open и работа с текстовыми файлами"
+        url: https://younglinux.info/python/files
+    checkTasks:
+      - title: "Информатикс: «A + B» из файла"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=5763&chapterid=111326
+      - title: "Информатикс: «Сумма чисел в строках»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=5763&chapterid=111333

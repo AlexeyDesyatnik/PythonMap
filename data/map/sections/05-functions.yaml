@@ -4,31 +4,20 @@ nodes:
   - id: functions
     kind: topic
     title: Функции
-    description: Функция — именованный кусок программы с параметрами, def создаёт её, return возвращает результат. Нужна, чтобы не повторять код и решать задачу по частям — например, вынести проверку «подходит ли число» в отдельную функцию.
+    description: Функция — именованный кусок программы с параметрами, def создаёт её, return возвращает результат. Нужна, чтобы не повторять код и решать задачу по частям — например, вынести проверку «подходит ли число» в отдельную функцию. Переменные, созданные внутри функции, снаружи не видны, а внешнюю переменную функция меняет только через global.
     prerequisites: [conditions]
     materials:
-      - title: "Хендбук Яндекса: функции, аргументы и return"
+      - title: "Хендбук Яндекса: функции, return, локальные и глобальные переменные"
         url: https://contest.yandex.ru/tracks/python/functions-in-python/functions-scopes-and-parameters
       - title: "Younglinux: определение и вызов функций"
         url: https://younglinux.info/python/function
-      - title: "Younglinux: оператор return"
-        url: https://younglinux.info/python/return
+      - title: "Younglinux: локальные и глобальные переменные"
+        url: https://younglinux.info/python/local-global
     checkTasks:
       - title: "Информатикс: «Принадлежит ли точка кругу»"
         url: https://informatics.msk.ru/mod/statements/view.php?id=3962&chapterid=3794
       - title: "Информатикс: «Принадлежит ли точка квадрату — 1»"
         url: https://informatics.msk.ru/mod/statements/view.php?id=3962&chapterid=3792
-
-  - id: scope
-    kind: topic
-    title: Локальные и глобальные переменные
-    description: Переменные внутри функции не видны снаружи, а внешние без global нельзя изменить. Без этого функции ведут себя неожиданно и портят чужие значения.
-    prerequisites: [functions]
-    materials:
-      - title: "Хендбук Яндекса: область видимости, локальные и глобальные переменные"
-        url: https://contest.yandex.ru/tracks/python/functions-in-python/functions-scopes-and-parameters#chto-takoe-oblast-vidimosti-chem-razlichayutsya-lokalnye-i-globalnye-peremennye
-      - title: "Younglinux: локальные и глобальные переменные"
-        url: https://younglinux.info/python/local-global
 
   - id: lambda-key
     kind: topic

@@ -14,7 +14,6 @@ goals:
           - dicts
           - lambda-key
           - recursion
-          - scope
       - id: ege-basic
         title: Базовые задания
         targets: [ege-truth-table, ege-number-algorithm, ege-turtle, ege-words, ege-table-rows, ege-subnet-mask]

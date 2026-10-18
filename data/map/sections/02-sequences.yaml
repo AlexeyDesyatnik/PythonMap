@@ -6,27 +6,69 @@ nodes:
     title: Цикл for
     description: for повторяет действия для каждого числа из range — с заданными началом, концом и шагом. Нужен, когда заранее известно, сколько раз повторять.
     prerequisites: [input-output]
+    materials:
+      - title: "Хендбук Яндекса: цикл for и функция range"
+        url: https://contest.yandex.ru/tracks/python/basic-python-constructs/loops#cikl-for
+    checkTasks:
+      - title: "Информатикс: «Ряд — 1»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3457&chapterid=3528
+      - title: "acmp.ru: «Числа Фибоначчи»"
+        url: https://acmp.ru/index.asp?main=task&id_task=147
 
   - id: sequence-processing
     kind: topic
     title: Сумма, количество и максимум
     description: Переменные-накопители собирают в цикле сумму, количество, наибольшее и наименьшее значение. Основа почти всех задач на последовательность чисел.
     prerequisites: [for-range, conditions]
+    materials:
+      - title: "Хабр: задание 16 ОГЭ — количество и максимум в последовательности"
+        url: https://habr.com/ru/articles/1037608/
+    checkTasks:
+      - title: "Информатикс: «Сумма N чисел»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3457&chapterid=3540
+      - title: "acmp.ru: «Монетки»"
+        url: https://acmp.ru/index.asp?main=task&id_task=106
 
   - id: nested-loops
     kind: topic
     title: Вложенные циклы
     description: Цикл внутри цикла перебирает все пары, тройки и таблицы значений. На вложенных циклах держится решение задач перебором.
     prerequisites: [for-range]
+    materials:
+      - title: "Хендбук Яндекса: вложенные циклы"
+        url: https://contest.yandex.ru/tracks/python/basic-python-constructs/nested-loops#vlozhennye-cikly
+    checkTasks:
+      - title: "Информатикс: «Лесенка»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3457&chapterid=3547
 
   - id: while-loop
     kind: topic
     title: Цикл while
     description: while повторяет действия, пока условие истинно, break досрочно завершает цикл, continue переходит к следующему повторению. Нужен, когда число повторений заранее неизвестно.
     prerequisites: [conditions]
+    materials:
+      - title: "Хендбук Яндекса: цикл while"
+        url: https://contest.yandex.ru/tracks/python/basic-python-constructs/loops#cikl-while
+      - title: "Хендбук Яндекса: операторы break и continue"
+        url: https://contest.yandex.ru/tracks/python/basic-python-constructs/nested-loops#operator-break
+      - title: "Younglinux: цикл while"
+        url: https://younglinux.info/python/while
+    checkTasks:
+      - title: "Информатикс: «Список степеней двойки»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3751&chapterid=3644
+      - title: "Информатикс: «Утренняя пробежка»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=3751&chapterid=3647
 
   - id: digits-of-number
     kind: topic
     title: Цифры числа
     description: Разбор числа на цифры делением и остатком в цикле while. Встречается и в олимпиадных задачах, и в заданиях ЕГЭ.
     prerequisites: [while-loop, arithmetic]
+    materials:
+      - title: "CodeChick: цифры числа — остаток и целочисленное деление"
+        url: https://codechick.io/tutorials/school-informatics-1011/si1011-cifry-chisla-delimost
+    checkTasks:
+      - title: "Информатикс: «Количество нулей»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=2587&chapterid=115
+      - title: "Информатикс: «Минимальная и максимальная цифры»"
+        url: https://informatics.msk.ru/mod/statements/view.php?id=2587&chapterid=116

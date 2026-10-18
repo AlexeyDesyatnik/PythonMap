@@ -6,12 +6,26 @@ nodes:
     title: Перебор комбинаций — itertools
     description: product, permutations и combinations перебирают все наборы, перестановки и сочетания. Заменяют глубокую вложенность циклов при полном переборе.
     prerequisites: [lists]
+    materials:
+      - title: "Хендбук Яндекса: itertools — product, permutations и combinations"
+        url: https://contest.yandex.ru/tracks/python/collections-and-memory/built-in-collection-tools#product-dekartovo-proizvedenie
+    checkTasks:
+      - title: "acmp.ru: «Перестановки»"
+        url: https://acmp.ru/index.asp?main=task&id_task=350
+      - title: "acmp.ru: «K-перестановки»"
+        url: https://acmp.ru/index.asp?main=task&id_task=498
 
   - id: bool-expressions
     kind: topic
     title: Логические выражения
     description: Условие — это значение True или False, его можно сохранить и вычислить для всех наборов переменных. Импликацию записывают через <=, равносильность — через ==.
     prerequisites: [conditions]
+    materials:
+      - title: "CodeChick: логические операции, импликация и таблицы истинности"
+        url: https://codechick.io/tutorials/school-informatics-1011/si1011-vyskazyvaniya-tablicy-istinnosti
+    checkTasks:
+      - title: "К. Поляков: онлайн-тест «Таблицы истинности логической функции»"
+        url: https://kpolyakov.spb.ru/school/egetest2020/b2.htm
 
   - id: divisors-primes
     kind: topic
@@ -30,6 +44,16 @@ nodes:
     title: Системы счисления
     description: Перевод чисел функциями bin, hex и int с основанием и вручную через остатки от деления, а также поразрядные операции &, | и сдвиги. Нужны для задач о записи чисел и двоичных масках.
     prerequisites: [strings, digits-of-number]
+    materials:
+      - title: "CodeChick: позиционные системы счисления, int с основанием, bin и hex"
+        url: https://codechick.io/tutorials/school-informatics-1011/si1011-pozicionnye-sistemy
+      - title: "CodeChick: побитовые операции и сдвиги"
+        url: https://codechick.io/tutorials/school-informatics-1011/si1011-dvoichnaya-arifmetika
+    checkTasks:
+      - title: "acmp.ru: «Бит-реверс»"
+        url: https://acmp.ru/index.asp?main=task&id_task=542
+      - title: "acmp.ru: «Единицы»"
+        url: https://acmp.ru/index.asp?main=task&id_task=22
 
   - id: sieve
     kind: topic

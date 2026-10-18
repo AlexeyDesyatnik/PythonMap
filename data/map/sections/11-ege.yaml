@@ -10,6 +10,14 @@ nodes:
     title: Таблица истинности
     description: По фрагменту таблицы истинности нужно определить, какой переменной соответствует каждый столбец. Кодом перебирают все наборы значений и все порядки переменных через itertools.
     prerequisites: [bool-expressions, itertools-enumeration]
+    materials:
+      - title: "Решу ЕГЭ: задание 2 с решением через product и permutations"
+        url: https://inf-ege.sdamgia.ru/problem?id=15787
+      - title: "ИТ Шеф: задание 2 — таблица истинности на Python"
+        url: https://itchief.ru/python/ege-2
+    checkTasks:
+      - title: "Решу ЕГЭ: тест из заданий 2 с проверкой ответов"
+        url: https://inf-ege.sdamgia.ru/test?filter=all&category_id=352&ttest=10
 
   - id: ege-number-algorithm
     kind: ege-task
@@ -17,6 +25,14 @@ nodes:
     title: Алгоритм над записью числа
     description: Алгоритм строит новое число из двоичной или другой записи исходного; нужно найти число с заданным свойством. Решается перебором исходных чисел с bin и срезами строк.
     prerequisites: [number-systems, sequence-processing]
+    materials:
+      - title: "Решу ЕГЭ: задание 5 демоверсии 2027 с решением на Python"
+        url: https://inf-ege.sdamgia.ru/problem?id=92547
+      - title: "Школа Виктора Комлева: задание 5 — bin, int и двоичные строки"
+        url: https://victor-komlev.ru/zadanie-5-ege-analiz-algoritmov-dlya-ispolnitelej/
+    checkTasks:
+      - title: "Решу ЕГЭ: тест из заданий 5 с проверкой ответов"
+        url: https://inf-ege.sdamgia.ru/test?filter=all&category_id=362&ttest=10
 
   - id: ege-turtle
     kind: ege-task
@@ -24,6 +40,12 @@ nodes:
     title: Исполнитель Черепаха
     description: Нужно посчитать точки с целыми координатами внутри фигуры, которую рисует Черепаха. Алгоритм повторяют модулем turtle и считают точки на рисунке.
     prerequisites: [for-range]
+    materials:
+      - title: "ИТ Шеф: задание 6 — Черепаха в модуле turtle"
+        url: https://itchief.ru/python/ege-6
+    checkTasks:
+      - title: "Решу ЕГЭ: тест из заданий 6 с проверкой ответов"
+        url: https://inf-ege.sdamgia.ru/test?filter=all&category_id=316&ttest=10
 
   - id: ege-words
     kind: ege-task
@@ -31,6 +53,16 @@ nodes:
     title: Перебор слов
     description: Слова из заданных букв выписаны по алфавиту; нужно найти номер или количество слов с условием. Слова перебираются в нужном порядке через itertools.product.
     prerequisites: [itertools-enumeration]
+    materials:
+      - title: "Решу ЕГЭ: задание 8 демоверсии 2027 с решением через product"
+        url: https://inf-ege.sdamgia.ru/problem?id=92550
+      - title: "Школа Виктора Комлева: задание 8 — перебор слов через itertools"
+        url: https://victor-komlev.ru/zadanie-8-ege-po-informatike-kombinatorika/
+    checkTasks:
+      - title: "Решу ЕГЭ: тест из заданий 8 «Слова по порядку» с проверкой ответов"
+        url: https://inf-ege.sdamgia.ru/test?filter=all&category_id=243&ttest=10
+      - title: "К. Поляков: онлайн-тест «Слова в алфавитном порядке»"
+        url: https://kpolyakov.spb.ru/school/egetest/b8-a.htm
 
   - id: ege-table-rows
     kind: ege-task
@@ -38,6 +70,14 @@ nodes:
     title: Обработка строк таблицы
     description: Нужно посчитать строки таблицы чисел, для которых выполнены условия — например, все числа различны. Кодом таблицу читают построчно и проверяют каждую строку.
     prerequisites: [files, sets, list-tools]
+    materials:
+      - title: "Решу ЕГЭ: задание 9 демоверсии 2027 с решением на Python"
+        url: https://inf-ege.sdamgia.ru/problem?id=92551
+      - title: "ИТ Шеф: задание 9 — решение в Excel и на Python"
+        url: https://itchief.ru/python/ege-9
+    checkTasks:
+      - title: "Решу ЕГЭ: тест из заданий 9 с файлами и проверкой ответов"
+        url: https://inf-ege.sdamgia.ru/test?filter=all&category_id=406&ttest=10
 
   - id: ege-subnet-mask
     kind: ege-task
@@ -45,6 +85,16 @@ nodes:
     title: Маска подсети
     description: По IP-адресу узла и маске нужно найти адрес сети или посчитать адреса с условием. Адрес сети — поразрядная конъюнкция адреса и маски.
     prerequisites: [number-systems, lists]
+    materials:
+      - title: "Школа Виктора Комлева: задание 10 — IP-адреса и маски, модуль ipaddress"
+        url: https://victor-komlev.ru/reshenie-zadanij-13-ege-organizatsiya-kompyuternyh-setej-i-adresatsiya/
+      - title: "CodeChick: адрес сети как поразрядная конъюнкция адреса и маски"
+        url: https://codechick.io/tutorials/school-informatics-1011/si1011-ip-adresaciya-web
+    checkTasks:
+      - title: "Решу ЕГЭ: тест «Определение адреса сети» с проверкой ответов"
+        url: https://inf-ege.sdamgia.ru/test?filter=all&category_id=253&ttest=10
+      - title: "Решу ЕГЭ: тест «Подсчёт количества адресов в сети» с проверкой ответов"
+        url: https://inf-ege.sdamgia.ru/test?filter=all&category_id=348&ttest=10
 
   - id: ege-executor-programs
     kind: ege-task
